@@ -153,4 +153,5 @@ Este es un proyecto interno de la empresa. Para consultas técnicas, contactar a
 
 ---
 
-**Desarrollado con ❤️ para MAFM VALVES & STEEL C.A.**
+**Desarrollado por JustZyo para MAFM VALVES & STEEL C.A.**
+
