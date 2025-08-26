@@ -58,99 +58,50 @@
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Montserrat:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* Loading screen styles - Colores actualizados para azules más claros */
-    .loading-screen {
+    /* Simple loading indicator - minimal and fast */
+    .loading-indicator {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1E3A5F 0%, #2E5A8A 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      height: 4px;
+      background: linear-gradient(90deg, #4A7AB8, #7BA3D1);
       z-index: 9999;
-      color: white;
-      font-family: 'Oswald', sans-serif;
+      animation: loading-bar 1s ease-in-out infinite;
     }
     
-    .loading-logo {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #4A7AB8 0%, #7BA3D1 100%);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      animation: pulse 2s infinite;
-    }
-    
-    .loading-text {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    
-    .loading-subtitle {
-      font-size: 14px;
-      opacity: 0.8;
-      font-family: 'Montserrat', sans-serif;
-    }
-    
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(255,255,255,0.3);
-      border-top: 3px solid #4A7AB8;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-top: 20px;
-    }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .fade-out {
-      opacity: 0;
-      transition: opacity 0.5s ease-out;
+    @keyframes loading-bar {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
   </style>
 </head>
 <body>
-  <!-- Loading Screen -->
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-logo">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div class="loading-text">MAFM VALVES & STEEL C.A.</div>
-    <div class="loading-subtitle">Cargando...</div>
-    <div class="loading-spinner"></div>
-  </div>
+  <!-- Simple loading bar at the top -->
+  <div id="loading-indicator" class="loading-indicator"></div>
 
-  <script src="flutter_bootstrap.js" async></script>
+  <script src="flutter.js" defer></script>
   
   <script>
-    // Hide loading screen when Flutter is ready
-    window.addEventListener('flutter-first-frame', function() {
-      const loadingScreen = document.getElementById('loading-screen');
-      loadingScreen.classList.add('fade-out');
-      setTimeout(() => {
-        loadingScreen.style.display = 'none';
-      }, 500);
+    // Simple and fast Flutter initialization
+    window.addEventListener('load', function() {
+      // Hide loading bar immediately when page loads
+      const loadingIndicator = document.getElementById('loading-indicator');
+      if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+      }
+      
+      // Initialize Flutter
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
     });
   </script>
 </body>
