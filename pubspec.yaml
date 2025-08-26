@@ -1,0 +1,27 @@
+name: valvessteelpipes_paginaweb
+description: "Sitio web profesional para MAFM VALVES & STEEL C.A. - Empresa especializada en válvulas y tuberías de acero"
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.1.0
+  url_launcher: ^6.2.4
+  flutter_svg: ^2.0.10+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/images/brands/
+    - assets/images/Fondos/
