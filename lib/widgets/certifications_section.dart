@@ -21,7 +21,7 @@ class CertificationsSection extends StatelessWidget {
           // Subtítulo
           Center(
             child: Text(
-              'Cumplimos con los más altos estándares internacionales de calidad',
+              '¡Cumplimos con los más altos estándares internacionales de calidad!',
               style: AppTheme.subtitle1.copyWith(
                 color: AppTheme.pureWhite.withOpacity(0.9),
               ),
@@ -34,8 +34,10 @@ class CertificationsSection extends StatelessWidget {
             builder: (context, constraints) {
               if (constraints.maxWidth > 1000) {
                 return _buildWideGrid();
-              } else {
+              } else if (constraints.maxWidth > 600) {
                 return _buildNarrowGrid();
+              } else {
+                return _buildMobileGrid(); // Nuevo grid para móviles
               }
             },
           ),
@@ -59,7 +61,7 @@ class CertificationsSection extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    'Todas nuestras válvulas y tuberías cumplen con las especificaciones API, ASME, ASTM y ANSI, garantizando la máxima calidad y seguridad en sus aplicaciones industriales.',
+                    'Todas nuestras válvulas y tuberías cumplen con las especificaciones API-15L, ASTM-A234, A-105, ASTM-A53, ASTM A350LF2, ASTM A33 GRADO 6, ASME B36.10, ASTM-A182 GRADO 5/9, ASTM-A249/A269/A312/A304/316/316L/321/ALLOY 20, garantizando la máxima calidad y seguridad en sus aplicaciones industriales.',
                     style: AppTheme.bodyText1.copyWith(
                       color: AppTheme.pureWhite,
                       fontSize: 16,
@@ -110,58 +112,73 @@ class CertificationsSection extends StatelessWidget {
     );
   }
 
+  Widget _buildMobileGrid() {
+    return Column(
+      children: [
+        _buildCertificationCard(_certifications[0]),
+        const SizedBox(height: 16),
+        _buildCertificationCard(_certifications[1]),
+        const SizedBox(height: 16),
+        _buildCertificationCard(_certifications[2]),
+        const SizedBox(height: 16),
+        _buildCertificationCard(_certifications[3]),
+      ],
+    );
+  }
+
   Widget _buildCertificationCard(CertificationData certification) {
-    return Container(
-      height: 200,
-      child: Card(
-        elevation: 8,
-        color: AppTheme.pureWhite,
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Icono de la certificación
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: AppTheme.accentBlue.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  certification.icon,
-                  color: AppTheme.accentBlue,
-                  size: 28,
-                ),
+    return Card(
+      elevation: 8,
+      color: AppTheme.pureWhite,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Icono de la certificación
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: AppTheme.accentBlue.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
               ),
-              const SizedBox(height: 16),
+              child: Icon(
+                certification.icon,
+                color: AppTheme.accentBlue,
+                size: 28,
+              ),
+            ),
+            const SizedBox(height: 16),
 
-              // Título de la certificación
-              Center(
-                child: Text(
-                  certification.name,
-                  style: AppTheme.subtitle1.copyWith(
-                    color: AppTheme.primaryBlue,
-                    fontWeight: FontWeight.w700,
-                  ),
+            // Título de la certificación
+            Center(
+              child: Text(
+                certification.name,
+                style: AppTheme.subtitle1.copyWith(
+                  color: AppTheme.primaryBlue,
+                  fontWeight: FontWeight.w700,
                 ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 8),
+            ),
+            const SizedBox(height: 12),
 
-              // Descripción
-              Center(
-                child: Text(
-                  certification.description,
-                  style: AppTheme.bodyText2.copyWith(
-                    color: AppTheme.metallicGray,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+            // Descripción
+            Center(
+              child: Text(
+                certification.description,
+                style: AppTheme.bodyText2.copyWith(
+                  color: AppTheme.metallicGray,
+                  height: 1.4,
                 ),
+                textAlign: TextAlign.center,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -182,27 +199,27 @@ class CertificationData {
 
 final List<CertificationData> _certifications = [
   CertificationData(
-    name: 'API 6D',
+    name: 'API-15L',
     description:
-        'Estándar para válvulas de compuerta, globo y verificación para servicios de petróleo y gas natural.',
-    icon: Icons.verified_user,
+        'Estándar para tuberías de acero al carbono para servicios de transporte de petróleo y gas natural.',
+    icon: Icons.straighten,
   ),
   CertificationData(
-    name: 'ASME B16.34',
+    name: 'ASTM-A234',
     description:
-        'Estándar para válvulas de acero con bridas, roscadas y soldadas para servicios de alta presión.',
-    icon: Icons.security,
+        'Especificación para accesorios de acero al carbono y aleado para servicios de alta temperatura.',
+    icon: Icons.precision_manufacturing,
   ),
   CertificationData(
-    name: 'ASTM A53',
+    name: 'A-105',
     description:
-        'Especificación para tuberías de acero al carbono para servicios de alta temperatura.',
-    icon: Icons.science,
+        'Especificación para accesorios de acero al carbono para servicios de alta temperatura y presión.',
+    icon: Icons.construction,
   ),
   CertificationData(
-    name: 'ANSI B16.5',
+    name: 'ASME B36.10',
     description:
-        'Estándar para bridas de acero y aleaciones para servicios de alta presión.',
+        'Estándar para dimensiones de tuberías de acero al carbono y aleado para servicios industriales.',
     icon: Icons.engineering,
   ),
 ];

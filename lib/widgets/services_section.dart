@@ -21,7 +21,7 @@ class ServicesSection extends StatelessWidget {
           // Subtítulo
           Center(
             child: Text(
-              'Soluciones integrales en válvulas y tuberías de acero para industrias exigentes',
+              '¡Soluciones integrales en válvulas y tuberías de acero para industrias exigentes!',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),

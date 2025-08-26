@@ -31,39 +31,84 @@ class Footer extends StatelessWidget {
           const SizedBox(height: 30),
 
           // Derechos de autor y enlaces legales
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '© 2024 MAFM VALVES & STEEL C.A. Todos los derechos reservados.',
-                style: AppTheme.caption.copyWith(
-                  color: AppTheme.pureWhite.withOpacity(0.7),
-                ),
-              ),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Política de Privacidad',
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth > 600) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        '© 2025 MAFM VALVES & STEEL PIPES C.A. Todos los derechos reservados. RIF: J-408267160 ',
+                        style: AppTheme.caption.copyWith(
+                          color: AppTheme.pureWhite.withOpacity(0.7),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Política de Privacidad',
+                            style: AppTheme.caption.copyWith(
+                              color: AppTheme.pureWhite.withOpacity(0.7),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Términos de Servicio',
+                            style: AppTheme.caption.copyWith(
+                              color: AppTheme.pureWhite.withOpacity(0.7),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '© 2025 MAFM VALVES & STEEL PIPES C.A. Todos los derechos reservados. RIF: J-408267160 ',
                       style: AppTheme.caption.copyWith(
                         color: AppTheme.pureWhite.withOpacity(0.7),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 20),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Términos de Servicio',
-                      style: AppTheme.caption.copyWith(
-                        color: AppTheme.pureWhite.withOpacity(0.7),
-                      ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Política de Privacidad',
+                            style: AppTheme.caption.copyWith(
+                              color: AppTheme.pureWhite.withOpacity(0.7),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'Términos de Servicio',
+                            style: AppTheme.caption.copyWith(
+                              color: AppTheme.pureWhite.withOpacity(0.7),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                );
+              }
+            },
           ),
         ],
       ),
@@ -96,80 +141,139 @@ class Footer extends StatelessWidget {
   }
 
   Widget _buildNarrowLayout() {
-    return Column(
-      children: [
-        _buildCompanyInfo(),
-        const SizedBox(height: 40),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 500) {
+          return Column(
+            children: [
+              _buildCompanyInfo(),
+              const SizedBox(height: 40),
 
-        Row(
-          children: [
-            Expanded(child: _buildQuickLinks()),
-            const SizedBox(width: 20),
-            Expanded(child: _buildServicesLinks()),
-          ],
-        ),
-        const SizedBox(height: 40),
-        _buildContactInfo(),
-      ],
+              Row(
+                children: [
+                  Expanded(child: _buildQuickLinks()),
+                  const SizedBox(width: 20),
+                  Expanded(child: _buildServicesLinks()),
+                ],
+              ),
+              const SizedBox(height: 40),
+              _buildContactInfo(),
+            ],
+          );
+        } else {
+          return Column(
+            children: [
+              _buildCompanyInfo(),
+              const SizedBox(height: 40),
+              _buildQuickLinks(),
+              const SizedBox(height: 40),
+              _buildServicesLinks(),
+              const SizedBox(height: 40),
+              _buildContactInfo(),
+            ],
+          );
+        }
+      },
     );
   }
 
   Widget _buildCompanyInfo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Logo y nombre
-        Row(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isVeryNarrow = constraints.maxWidth <= 400;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            MafmImageOnly(size: 40),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'MAFM',
-                  style: AppTheme.heading3.copyWith(
-                    color: AppTheme.accentBlue,
-                    fontSize: 20,
+            // Logo y nombre
+            if (isVeryNarrow)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MafmImageOnly(size: 40),
+                  const SizedBox(height: 12),
+                  Text(
+                    'MAFM',
+                    style: AppTheme.heading3.copyWith(
+                      color: AppTheme.accentBlue,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-                Text(
-                  'VALVES & STEEL C.A.',
-                  style: AppTheme.caption.copyWith(
-                    color: AppTheme.pureWhite.withOpacity(0.7),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
+                  Text(
+                    'VALVES & STEEL PIPES C.A.',
+                    style: AppTheme.caption.copyWith(
+                      color: AppTheme.pureWhite.withOpacity(0.7),
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              )
+            else
+              Row(
+                children: [
+                  MafmImageOnly(size: 40),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'MAFM',
+                        style: AppTheme.heading3.copyWith(
+                          color: AppTheme.accentBlue,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        'VALVES & STEEL PIPES C.A.',
+                        style: AppTheme.caption.copyWith(
+                          color: AppTheme.pureWhite.withOpacity(0.7),
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+            const SizedBox(height: 20),
+
+            // Descripción
+            Text(
+              'Especialistas en válvulas industriales y tuberías de acero de la más alta calidad para las industrias más exigentes del mercado.',
+              style: AppTheme.bodyText2.copyWith(
+                color: AppTheme.pureWhite.withOpacity(0.8),
+                height: 1.5,
+              ),
             ),
+
+            const SizedBox(height: 20),
+
+            // Redes sociales
+            if (isVeryNarrow)
+              Column(
+                children: [
+                  _buildSocialIcon(Icons.camera_alt, () {}, 'Instagram'),
+                  const SizedBox(height: 12),
+                  _buildSocialIcon(Icons.business, () {}, 'LinkedIn'),
+                  const SizedBox(height: 12),
+                  _buildSocialIcon(Icons.email, () {}, 'Email'),
+                ],
+              )
+            else
+              Row(
+                children: [
+                  _buildSocialIcon(Icons.camera_alt, () {}, 'Instagram'),
+                  const SizedBox(width: 16),
+                  _buildSocialIcon(Icons.business, () {}, 'LinkedIn'),
+                  const SizedBox(width: 16),
+                  _buildSocialIcon(Icons.email, () {}, 'Email'),
+                ],
+              ),
           ],
-        ),
-
-        const SizedBox(height: 20),
-
-        // Descripción
-        Text(
-          'Especialistas en válvulas industriales y tuberías de acero de alta calidad para las industrias más exigentes del mercado.',
-          style: AppTheme.bodyText2.copyWith(
-            color: AppTheme.pureWhite.withOpacity(0.8),
-            height: 1.5,
-          ),
-        ),
-
-        const SizedBox(height: 20),
-
-        // Redes sociales
-        Row(
-          children: [
-            _buildSocialIcon(Icons.camera_alt, () {}, 'Instagram'),
-            const SizedBox(width: 16),
-            _buildSocialIcon(Icons.business, () {}, 'LinkedIn'),
-            const SizedBox(width: 16),
-            _buildSocialIcon(Icons.email, () {}, 'Email'),
-          ],
-        ),
-      ],
+        );
+      },
     );
   }
 

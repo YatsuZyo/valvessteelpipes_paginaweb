@@ -14,7 +14,7 @@ class AboutSection extends StatelessWidget {
         children: [
           // Título de la sección
           Text(
-            'Sobre Nosotros',
+            'Sobre Nosotros...',
             style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
           ),
           const SizedBox(height: 16),
@@ -22,7 +22,7 @@ class AboutSection extends StatelessWidget {
           // Subtítulo
           Center(
             child: Text(
-              'Más de 15 años de experiencia en la industria de válvulas y tuberías',
+              '¡Más de 9 años de experiencia en la industria de válvulas y tuberías!',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),
@@ -99,7 +99,7 @@ class AboutSection extends StatelessWidget {
         const SizedBox(height: 16),
 
         Text(
-          'Somos una empresa venezolana especializada en la fabricación, distribución y comercialización de válvulas industriales y tuberías de acero de alta calidad. Desde nuestros inicios en 2008, nos hemos dedicado a proporcionar soluciones integrales para las industrias más exigentes del mercado.',
+          'Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un socio estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto de la mano de nuestros mejores profesionales. Desde nuestros inicios en 2016, nos hemos dedicado a proporcionar soluciones integrales para las industrias más exigentes del mercado.',
           style: AppTheme.bodyText1.copyWith(
             color: AppTheme.darkGray,
             height: 1.7,
@@ -208,7 +208,6 @@ class AboutSection extends StatelessWidget {
     return Container(
       height: 300,
       decoration: BoxDecoration(
-        gradient: AppTheme.accentGradient,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -218,7 +217,15 @@ class AboutSection extends StatelessWidget {
           ),
         ],
       ),
-      child: Center(child: MafmImageOnly(size: 120)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset(
+          'assets/images/Fondos/Imagen stock de valvulas (1).png',
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 
