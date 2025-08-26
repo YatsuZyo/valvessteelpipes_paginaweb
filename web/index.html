@@ -83,20 +83,13 @@
   <script src="flutter.js" defer></script>
   
   <script>
-    // Simple and fast Flutter initialization
+    // Simple Flutter initialization
     window.addEventListener('load', function() {
-      // Hide loading bar immediately when page loads
+      // Hide loading bar
       const loadingIndicator = document.getElementById('loading-indicator');
       if (loadingIndicator) {
         loadingIndicator.style.display = 'none';
       }
-      
-      // Initialize Flutter with new API
-      _flutter.loader.load({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        }
-      });
     });
   </script>
 </body>
