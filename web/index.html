@@ -141,9 +141,23 @@
     <div class="loading-spinner"></div>
   </div>
 
-  <script src="flutter_bootstrap.js" async></script>
+  <script src="flutter.js" defer></script>
   
   <script>
+    // Initialize Flutter
+    window.addEventListener('load', function() {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+
     // Hide loading screen when Flutter is ready
     window.addEventListener('flutter-first-frame', function() {
       const loadingScreen = document.getElementById('loading-screen');
@@ -152,6 +166,17 @@
         loadingScreen.style.display = 'none';
       }, 500);
     });
+
+    // Fallback: hide loading screen after 10 seconds if Flutter doesn't load
+    setTimeout(function() {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen && loadingScreen.style.display !== 'none') {
+        loadingScreen.classList.add('fade-out');
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+        }, 500);
+      }
+    }, 10000);
   </script>
 </body>
 </html>
