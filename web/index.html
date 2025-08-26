@@ -91,15 +91,10 @@
         loadingIndicator.style.display = 'none';
       }
       
-      // Initialize Flutter
-      _flutter.loader.loadEntrypoint({
+      // Initialize Flutter with new API
+      _flutter.loader.load({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
         }
       });
     });
