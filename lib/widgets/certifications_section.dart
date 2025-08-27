@@ -13,7 +13,7 @@ class CertificationsSection extends StatelessWidget {
         children: [
           // Título de la sección
           Text(
-            'Certificaciones y Estándares',
+            'CERTIFICACIONES Y ESTÁNDARES',
             style: AppTheme.heading2.copyWith(color: AppTheme.pureWhite),
           ),
           const SizedBox(height: 16),

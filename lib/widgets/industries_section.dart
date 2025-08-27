@@ -12,7 +12,7 @@ class IndustriesSection extends StatelessWidget {
         children: [
           // Título de la sección
           Text(
-            'Industrias que Atendemos',
+            'INDUSTRIAS QUE ATENDENMOS',
             style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
           ),
           const SizedBox(height: 16),
@@ -45,13 +45,13 @@ class IndustriesSection extends StatelessWidget {
           Column(
             children: [
               Text(
-                'Marcas que Representamos',
+                'MARCAS COMERCIALIZADAS Y REPRESENTADAS',
                 style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
               ),
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  'Trabajamos con las marcas más reconocidas del mercado',
+                  'COMERCIALIZAMOS MARCAS DE FABRICAS RECONOCIDAS EN EL MERCADO INTERNACIONAL DEL SECTOR OIL AND GAS',
                   style: AppTheme.subtitle1.copyWith(
                     color: AppTheme.metallicGray,
                   ),
@@ -353,8 +353,8 @@ final List<BrandData> _brands = [
     imagePath: 'assets/images/brands/swagelok-logo__1_-removebg-preview.png',
   ),
   BrandData(
-    name: 'Morris Valves',
-    imagePath: 'assets/images/brands/morrisvalves_logo-removebg-preview.png',
+    name: 'NTGD Valves',
+    imagePath: 'assets/images/brands/ntgff__1_-removebg-preview.png',
   ),
   BrandData(
     name: 'ICP Valves',

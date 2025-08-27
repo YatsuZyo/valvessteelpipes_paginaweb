@@ -40,7 +40,7 @@ class _ContactSectionState extends State<ContactSection> {
         children: [
           // Título de la sección
           Text(
-            'Contáctanos',
+            '¡CONTÁCTANOS!',
             style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
           ),
           const SizedBox(height: 16),

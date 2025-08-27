@@ -14,7 +14,7 @@ class AboutSection extends StatelessWidget {
         children: [
           // Título de la sección
           Text(
-            'Sobre Nosotros...',
+            'SOBRE NOSOTROS...',
             style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
           ),
           const SizedBox(height: 16),
@@ -233,7 +233,7 @@ class AboutSection extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Nuestros Valores',
+          'NUESTROS VALORES',
           style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
         ),
         const SizedBox(height: 40),

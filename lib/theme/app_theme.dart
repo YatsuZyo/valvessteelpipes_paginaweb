@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Paleta de colores principal - AZULES MÁS CLAROS
-  static const Color primaryBlue = Color(0xFF1E3A5F); // Azul oscuro más claro
-  static const Color secondaryBlue = Color(
-    0xFF2E5A8A,
-  ); // Azul intermedio más claro
-  static const Color accentBlue = Color(
-    0xFF4A7AB8,
-  ); // Azul claro/acento más brillante
+  // Paleta de colores principal - Actualizada (2025)
+  // Azul oscuro (casi negro)
+  static const Color primaryBlue = Color(0xFF282B3D);
+  // Azul intermedio
+  static const Color secondaryBlue = Color(0xFF364E6F);
+  // Azul eléctrico (ideal para acentos y botones)
+  static const Color accentBlue = Color(0xFF0088FF);
   static const Color metallicGray = Color(0xFF6C757D); // Gris metálico
   static const Color pureWhite = Color(0xFFFFFFFF); // Blanco puro
 
-  // Colores adicionales para gradientes y estados - MÁS LUMINOSOS
-  static const Color lightBlue = Color(
-    0xFF7BA3D1,
-  ); // Azul más claro para gradientes
+  // Colores adicionales para gradientes y estados
+  // Azul claro
+  static const Color lightBlue = Color(0xFF00AAFF);
   static const Color darkGray = Color(0xFF495057); // Gris oscuro para textos
   static const Color lightGray = Color(
     0xFFADB5BD,

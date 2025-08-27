@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import '../theme/app_theme.dart';
 
 class ServicesSection extends StatelessWidget {
@@ -13,7 +14,7 @@ class ServicesSection extends StatelessWidget {
         children: [
           // Título de la sección
           Text(
-            'Nuestros Servicios',
+            'NUESTROS PRODUCTOS',
             style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
           ),
           const SizedBox(height: 16),
@@ -21,7 +22,7 @@ class ServicesSection extends StatelessWidget {
           // Subtítulo
           Center(
             child: Text(
-              '¡Soluciones integrales en válvulas y tuberías de acero para industrias exigentes!',
+              'Suministro especializado en válvulas, tuberías y conexiones.',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),
@@ -97,24 +98,59 @@ class ServicesSection extends StatelessWidget {
 
   Widget _buildServiceCard(ServiceData service) {
     return Card(
+      elevation: 8,
+      shadowColor: AppTheme.primaryBlue.withOpacity(0.15),
       child: Container(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Icono del servicio
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                gradient: AppTheme.accentGradient,
+            // Imagen o icono del producto
+            if (service.imagePaths.isNotEmpty)
+              ClipRRect(
                 borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.primaryBlue.withOpacity(0.1),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: SizedBox(
+                    height: 140,
+                    width: double.infinity,
+                    child: Image.asset(
+                      service.imagePaths.first,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppTheme.lightGray.withOpacity(0.2),
+                          child: const Center(
+                            child: Icon(Icons.image_not_supported),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              )
+            else
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  gradient: AppTheme.accentGradient,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(service.icon, color: AppTheme.pureWhite, size: 28),
               ),
-              child: Icon(service.icon, color: AppTheme.pureWhite, size: 28),
-            ),
             const SizedBox(height: 20),
 
-            // Título del servicio
+            // Título del producto
             Text(
               service.title,
               style: AppTheme.heading3.copyWith(
@@ -134,6 +170,60 @@ class ServicesSection extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
+            // Galería adicional (si hay más de una imagen)
+            if (service.imagePaths.length > 1) ...[
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 72,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  // Mostrar miniaturas excluyendo la imagen de portada (index 0)
+                  itemCount: math.min(
+                    service.imagePaths.length > 1
+                        ? service.imagePaths.length - 1
+                        : 0,
+                    6,
+                  ),
+                  separatorBuilder: (_, __) => const SizedBox(width: 8),
+                  itemBuilder: (context, index) {
+                    final path = service.imagePaths[index + 1];
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: AppTheme.lightGray.withOpacity(0.3),
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppTheme.primaryBlue.withOpacity(0.08),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Image.asset(
+                            path,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: AppTheme.lightGray.withOpacity(0.2),
+                                child: const Icon(Icons.broken_image),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+            const SizedBox(height: 24),
             // Características
             ...service.features.map(
               (feature) => Padding(
@@ -171,7 +261,7 @@ class ServicesSection extends StatelessWidget {
                   side: const BorderSide(color: AppTheme.accentBlue),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('Saber Más'),
+                child: const Text('Ver Catálogo'),
               ),
             ),
           ],
@@ -186,12 +276,14 @@ class ServiceData {
   final String description;
   final IconData icon;
   final List<String> features;
+  final List<String> imagePaths;
 
   const ServiceData({
     required this.title,
     required this.description,
     required this.icon,
     required this.features,
+    this.imagePaths = const [],
   });
 }
 
@@ -199,7 +291,7 @@ final List<ServiceData> _services = [
   ServiceData(
     title: 'Válvulas Industriales',
     description:
-        'Fabricación y distribución de válvulas de compuerta, globo, mariposa y bola para aplicaciones industriales críticas.',
+        'Suministro de válvulas de compuerta, globo, mariposa y bola para aplicaciones industriales críticas.',
     icon: Icons.precision_manufacturing,
     features: [
       'Válvulas de compuerta y globo',
@@ -207,23 +299,38 @@ final List<ServiceData> _services = [
       'Presiones hasta 6000 PSI',
       'Temperaturas -196°C a +800°C',
     ],
+    imagePaths: [
+      'assets/images/products/valvulas_1.png',
+      'assets/images/products/valvulas_2.png',
+      'assets/images/products/valvulas_3.png',
+      'assets/images/products/valvulas_4.png',
+      'assets/images/products/valvulas_5.png',
+      'assets/images/products/valvulas_6.png',
+    ],
   ),
   ServiceData(
     title: 'Tuberías de Acero',
     description:
-        'Tuberías de acero inoxidable, carbono y aleaciones especiales para sistemas de alta presión y corrosión.',
+        'Suministro de tuberías para procesos industriales exigentes con múltiples materiales, conexiones y rangos de presión.',
     icon: Icons.straighten,
     features: [
-      'Acero inoxidable 304/316',
-      'Acero carbono ASTM A53',
-      'Aleaciones especiales',
-      'Diámetros 1/2" a 48"',
+      'Tipo de tubería: acero al carbono, acero inoxidable, cobre',
+      'Presiones: 150 a 10.000 PSI',
+      'Conexiones: Butt Weld, Socket Weld, NPT',
+      'Diámetros: 1/8" a 30"',
+    ],
+    imagePaths: [
+      'assets/images/products/tuberias_1.png',
+      'assets/images/products/tuberias_2.png',
+      'assets/images/products/tuberias_3.png',
+      'assets/images/products/tuberias_4.png',
+      'assets/images/products/tuberias_5.png',
     ],
   ),
   ServiceData(
     title: 'Accesorios y Conexiones',
     description:
-        'Codos, tees, reducciones y bridas de alta calidad para completar sus sistemas de tuberías.',
+        'Codos, tees, reducciones y bridas de alta calidad para sistemas de tuberías.',
     icon: Icons.construction,
     features: [
       'Codos 90° y 45°',
@@ -231,17 +338,36 @@ final List<ServiceData> _services = [
       'Bridas ANSI/ASME',
       'Soldadura y roscado',
     ],
+    imagePaths: [
+      'assets/images/products/conectores_1.jpg',
+      'assets/images/products/conectores_2.png',
+      'assets/images/products/conectores_3.png',
+      'assets/images/products/conectores_4.png',
+      'assets/images/products/conectores_5.png',
+      'assets/images/products/conectores_6.png',
+    ],
   ),
   ServiceData(
-    title: 'Servicios de Ingeniería',
+    title: 'Actuadores Hidráulicos y Neumáticos',
     description:
-        'Diseño, cálculo y asesoría técnica especializada para proyectos complejos de válvulas y tuberías.',
-    icon: Icons.engineering,
+        'Automatización de válvulas con actuadores hidráulicos y neumáticos para control preciso y confiable.',
+    icon: Icons.settings,
     features: [
-      'Cálculos de presión',
-      'Diseño de sistemas',
-      'Asesoría técnica',
-      'Certificaciones API/ASME',
+      'Actuadores Rack & Piñón',
+      'Actuadores de Yugo Escocés (Scotch Yoke)',
+      'Neumáticos',
+      'Hidráulicos',
+      'Alta presión',
+      'Compactos',
+      'Actuadores especiales',
+    ],
+    imagePaths: [
+      'assets/images/products/actuadores_1.png',
+      'assets/images/products/actuadores_2.png',
+      'assets/images/products/actuadores_3.png',
+      'assets/images/products/actuadores_4.png',
+      'assets/images/products/actuadores_5.png',
+      'assets/images/products/actuadores_6.png',
     ],
   ),
 ];

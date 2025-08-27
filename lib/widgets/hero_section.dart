@@ -59,7 +59,7 @@ class HeroSection extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Válvulas y Tuberías\nde Acero de Alta\nCalidad',
+                                    'VÁLVULAS, TUBERÍAS Y CONEXIONES DE ACERO AL CARBONO E INOXIDABLE CON ALTA CALIDAD CERTIFICADA.',
                                     style: AppTheme.heading1.copyWith(
                                       color: AppTheme.pureWhite,
                                       height: 1.06,
@@ -151,7 +151,7 @@ class _MobileContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Válvulas y Tuberías\nde Acero de Alta\nCalidad',
+          'VÁLVULAS, TUBERÍAS Y CONEXIONES DE ACERO AL CARBONO E INOXIDABLE CON ALTA CALIDAD CERTIFICADA.',
           style: AppTheme.heading1.copyWith(
             color: AppTheme.pureWhite,
             height: 1.06,
