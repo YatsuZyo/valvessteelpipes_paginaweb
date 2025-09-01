@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 
 class ServicesSection extends StatelessWidget {
   const ServicesSection({super.key});
+
+  Future<void> _launchCatalog() async {
+    final url =
+        'https://drive.google.com/file/d/16bN5Ln2gQgF8yfNQJ8B6zY6L-HSd1YfO/view?usp=sharing';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +31,7 @@ class ServicesSection extends StatelessWidget {
           // Subtítulo
           Center(
             child: Text(
-              'Suministro especializado en válvulas, tuberías y conexiones.',
+              'Suministro de válvulas, tuberías, conexiones y actuadores.',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),
@@ -255,7 +264,7 @@ class ServicesSection extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: _launchCatalog,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppTheme.accentBlue,
                   side: const BorderSide(color: AppTheme.accentBlue),
@@ -291,12 +300,12 @@ final List<ServiceData> _services = [
   ServiceData(
     title: 'Válvulas Industriales',
     description:
-        'Suministro de válvulas de compuerta, globo, mariposa y bola para aplicaciones industriales críticas.',
+        'Suministro de válvulas de compuerta, globo, mariposa, bola y check para aplicaciones industriales.',
     icon: Icons.precision_manufacturing,
     features: [
       'Válvulas de compuerta y globo',
       'Válvulas de mariposa y bola',
-      'Presiones hasta 6000 PSI',
+      'Presiones de 150 a 3000 PSI',
       'Temperaturas -196°C a +800°C',
     ],
     imagePaths: [

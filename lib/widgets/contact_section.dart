@@ -48,7 +48,7 @@ class _ContactSectionState extends State<ContactSection> {
           // Subtítulo
           Center(
             child: Text(
-              '¡Estamos para ayudarle con sus necesidades de válvulas y tuberías!',
+              '¡Estamos para ayudarle con sus necesidades de tuberías, válvulas, actuadores y conexiones de acero al carbono e inoxidable!',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),

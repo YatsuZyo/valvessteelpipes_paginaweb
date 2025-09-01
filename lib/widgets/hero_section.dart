@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 
 class HeroSection extends StatelessWidget {
   final VoidCallback onContactTap;
 
   const HeroSection({super.key, required this.onContactTap});
+
+  Future<void> _launchCatalog() async {
+    final url =
+        'https://drive.google.com/file/d/16bN5Ln2gQgF8yfNQJ8B6zY6L-HSd1YfO/view?usp=sharing';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +23,7 @@ class HeroSection extends StatelessWidget {
             constraints.maxWidth <= 1000 && constraints.maxWidth > 600;
         final bool isMobile = constraints.maxWidth <= 600;
 
-        final double titleSize = isMobile ? 34 : (isTablet ? 48 : 64);
+        final double titleSize = isMobile ? 28 : (isTablet ? 40 : 52);
         final double bodySize = isMobile ? 14 : (isTablet ? 16 : 20);
         final double statsGap = isMobile ? 28 : 60;
         final EdgeInsets contentPadding = EdgeInsets.symmetric(
@@ -50,6 +59,7 @@ class HeroSection extends StatelessWidget {
                           titleSize: titleSize,
                           bodySize: bodySize,
                           statsGap: statsGap,
+                          onCatalogTap: _launchCatalog,
                         )
                         : Row(
                           children: [
@@ -59,7 +69,7 @@ class HeroSection extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'VÁLVULAS, TUBERÍAS Y CONEXIONES DE ACERO AL CARBONO E INOXIDABLE CON ALTA CALIDAD CERTIFICADA.',
+                                    'VÁLVULAS, TUBERÍAS Y CONEXIONES DE ACERO AL CARBONO \nE INOXIDABLE CON ALTA CALIDAD CERTIFICADA.',
                                     style: AppTheme.heading1.copyWith(
                                       color: AppTheme.pureWhite,
                                       height: 1.06,
@@ -68,7 +78,7 @@ class HeroSection extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 28),
                                   Text(
-                                    '"Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un socio estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto."',
+                                    '"Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un suplidor estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto o proceso productivo."',
                                     style: AppTheme.bodyText1.copyWith(
                                       color: AppTheme.pureWhite.withOpacity(
                                         0.92,
@@ -82,7 +92,7 @@ class HeroSection extends StatelessWidget {
                                   SizedBox(
                                     height: 52,
                                     child: OutlinedButton(
-                                      onPressed: () {},
+                                      onPressed: _launchCatalog,
                                       style: OutlinedButton.styleFrom(
                                         foregroundColor: AppTheme.pureWhite,
                                         side: const BorderSide(
@@ -101,21 +111,22 @@ class HeroSection extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(height: statsGap),
-                                  Wrap(
-                                    spacing: 40,
-                                    runSpacing: 16,
+                                  Row(
                                     children: const [
                                       _StatItem(
                                         number: '9+',
                                         label: 'Años de Experiencia',
+                                        icon: Icons.work_history,
                                       ),
-                                      _StatItem(
+                                      SizedBox(width: 40),
+                                      /*_StatItem(
                                         number: '500+',
                                         label: 'Proyectos Completados',
-                                      ),
+                                      ),*/
                                       _StatItem(
                                         number: '24/7',
-                                        label: 'Soporte Técnico',
+                                        label: 'Atención',
+                                        icon: Icons.support_agent,
                                       ),
                                     ],
                                   ),
@@ -137,11 +148,13 @@ class _MobileContent extends StatelessWidget {
   final double titleSize;
   final double bodySize;
   final double statsGap;
+  final VoidCallback onCatalogTap;
 
   const _MobileContent({
     required this.titleSize,
     required this.bodySize,
     required this.statsGap,
+    required this.onCatalogTap,
   });
 
   @override
@@ -160,7 +173,7 @@ class _MobileContent extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Text(
-          '"Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un socio estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto."',
+          '"Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un suplidor estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto."',
           style: AppTheme.bodyText1.copyWith(
             color: AppTheme.pureWhite.withOpacity(0.92),
             fontSize: bodySize,
@@ -173,7 +186,7 @@ class _MobileContent extends StatelessWidget {
           width: double.infinity,
           height: 48,
           child: OutlinedButton(
-            onPressed: () {},
+            onPressed: onCatalogTap,
             style: OutlinedButton.styleFrom(
               foregroundColor: AppTheme.pureWhite,
               side: const BorderSide(color: AppTheme.pureWhite, width: 2),
@@ -183,13 +196,20 @@ class _MobileContent extends StatelessWidget {
           ),
         ),
         SizedBox(height: statsGap),
-        Wrap(
-          spacing: 24,
-          runSpacing: 12,
+        Row(
           children: const [
-            _StatItem(number: '9+', label: 'Años de Experiencia'),
-            _StatItem(number: '500+', label: 'Proyectos Completados'),
-            _StatItem(number: '24/7', label: 'Soporte Técnico'),
+            _StatItem(
+              number: '9+',
+              label: 'Años de Experiencia',
+              icon: Icons.work_history,
+            ),
+            SizedBox(width: 24),
+            //_StatItem(number: '500+', label: 'Proyectos Completados'),
+            _StatItem(
+              number: '24/7',
+              label: 'Atención',
+              icon: Icons.support_agent,
+            ),
           ],
         ),
       ],
@@ -200,28 +220,40 @@ class _MobileContent extends StatelessWidget {
 class _StatItem extends StatelessWidget {
   final String number;
   final String label;
+  final IconData icon;
 
-  const _StatItem({required this.number, required this.label});
+  const _StatItem({
+    required this.number,
+    required this.label,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          number,
-          style: AppTheme.heading2.copyWith(
-            color: AppTheme.accentBlue,
-            fontSize: 36,
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: AppTheme.bodyText2.copyWith(
-            color: AppTheme.pureWhite.withOpacity(0.85),
-            fontSize: 14,
-          ),
+        Icon(icon, color: AppTheme.accentBlue, size: 24),
+        const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              number,
+              style: AppTheme.heading2.copyWith(
+                color: AppTheme.accentBlue,
+                fontSize: 36,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              label,
+              style: AppTheme.bodyText2.copyWith(
+                color: AppTheme.pureWhite.withOpacity(0.85),
+                fontSize: 14,
+              ),
+            ),
+          ],
         ),
       ],
     );

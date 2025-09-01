@@ -4,17 +4,23 @@ import '../theme/app_theme.dart';
 import 'mafm_logo.dart';
 
 class Header extends StatefulWidget {
+  final VoidCallback onHomeTap;
   final VoidCallback onServicesTap;
   final VoidCallback onIndustriesTap;
   final VoidCallback onAboutTap;
   final VoidCallback onContactTap;
+  final bool isMenuOpen;
+  final VoidCallback onMenuToggle;
 
   const Header({
     super.key,
+    required this.onHomeTap,
     required this.onServicesTap,
     required this.onIndustriesTap,
     required this.onAboutTap,
     required this.onContactTap,
+    required this.isMenuOpen,
+    required this.onMenuToggle,
   });
 
   @override
@@ -22,8 +28,6 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
-  bool _isMenuOpen = false;
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -65,62 +69,89 @@ class _HeaderState extends State<Header> {
                 // Navegación
                 Expanded(
                   flex: 4,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _NavItem(
-                            title: 'Inicio',
-                            onTap: () {},
-                            isActive: true,
+                  child:
+                      isMobile
+                          ? _buildMobileNavigation()
+                          : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Navegación normal
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        _NavItem(
+                                          title: 'Inicio',
+                                          onTap: widget.onHomeTap,
+                                        ),
+                                        _NavItem(
+                                          title: 'Productos',
+                                          onTap: widget.onServicesTap,
+                                        ),
+                                        _NavItem(
+                                          title: 'Industrias',
+                                          onTap: widget.onIndustriesTap,
+                                        ),
+                                        _NavItem(
+                                          title: 'Nosotros',
+                                          onTap: widget.onAboutTap,
+                                        ),
+                                        _NavItem(
+                                          title: 'Contacto',
+                                          onTap: widget.onContactTap,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          _NavItem(
-                            title: 'Servicios',
-                            onTap: widget.onServicesTap,
-                          ),
-                          _NavItem(
-                            title: 'Industrias',
-                            onTap: widget.onIndustriesTap,
-                          ),
-                          if (!isMobile)
-                            _NavItem(
-                              title: 'Nosotros',
-                              onTap: widget.onAboutTap,
-                            ),
-                          _NavItem(
-                            title: 'Contacto',
-                            onTap: widget.onContactTap,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ),
 
-                // Botón de WhatsApp
-                Expanded(
-                  flex: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      _ContactButton(
-                        icon: null,
-                        customIcon: 'assets/icons/whatsapp_icon.png',
-                        label: isMobile ? 'WhatsApp' : '¡Contáctanos!',
-                        onTap: () => _launchWhatsApp(),
-                        color: const Color(0xFF25D366),
-                      ),
-                    ],
+                // Botón de WhatsApp (solo en desktop/tablet)
+                if (!isMobile)
+                  Expanded(
+                    flex: 2,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        _ContactButton(
+                          icon: null,
+                          customIcon: 'assets/icons/whatsapp_icon.png',
+                          label: '¡Contáctanos!',
+                          onTap: () => _launchWhatsApp(),
+                          color: const Color(0xFF25D366),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildMobileNavigation() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        IconButton(
+          onPressed: widget.onMenuToggle,
+          icon: Icon(
+            widget.isMenuOpen ? Icons.close : Icons.menu,
+            color: AppTheme.titleGray,
+            size: 24,
+          ),
+        ),
+      ],
     );
   }
 
@@ -136,13 +167,8 @@ class _HeaderState extends State<Header> {
 class _NavItem extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
-  final bool isActive;
 
-  const _NavItem({
-    required this.title,
-    required this.onTap,
-    this.isActive = false,
-  });
+  const _NavItem({required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -150,21 +176,19 @@ class _NavItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           decoration: BoxDecoration(
-            color:
-                isActive
-                    ? AppTheme.accentBlue.withOpacity(0.1)
-                    : Colors.transparent,
-            borderRadius: BorderRadius.circular(8),
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
             title,
             style: AppTheme.subtitle2.copyWith(
-              color: isActive ? AppTheme.accentBlue : AppTheme.metallicGray,
-              fontWeight: isActive ? FontWeight.w700 : FontWeight.w600,
+              color: AppTheme.metallicGray,
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
             ),
           ),
         ),
@@ -285,41 +309,220 @@ class _HeaderClipper extends CustomClipper<Path> {
 class _MobileNavItem extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
-  final bool isActive;
 
-  const _MobileNavItem({
-    required this.title,
-    required this.onTap,
-    this.isActive = false,
+  const _MobileNavItem({required this.title, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        hoverColor: AppTheme.lightBlue.withOpacity(0.1),
+        splashColor: AppTheme.accentBlue.withOpacity(0.2),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            border: Border(
+              bottom: BorderSide(
+                color: AppTheme.accentBlue.withOpacity(0.1),
+                width: 1,
+              ),
+            ),
+          ),
+          child: Text(
+            title,
+            style: AppTheme.subtitle2.copyWith(
+              color: AppTheme.titleGray,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MobileMenuOverlay extends StatelessWidget {
+  final bool isOpen;
+  final VoidCallback onClose;
+  final VoidCallback onHomeTap;
+  final VoidCallback onServicesTap;
+  final VoidCallback onIndustriesTap;
+  final VoidCallback onAboutTap;
+  final VoidCallback onContactTap;
+  final VoidCallback onWhatsAppTap;
+
+  const MobileMenuOverlay({
+    super.key,
+    required this.isOpen,
+    required this.onClose,
+    required this.onHomeTap,
+    required this.onServicesTap,
+    required this.onIndustriesTap,
+    required this.onAboutTap,
+    required this.onContactTap,
+    required this.onWhatsAppTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        decoration: BoxDecoration(
-          color:
-              isActive
-                  ? AppTheme.accentBlue.withOpacity(0.1)
-                  : Colors.transparent,
-          border: Border(
-            bottom: BorderSide(
-              color: AppTheme.lightGray.withOpacity(0.3),
-              width: 1,
+    if (!isOpen) return const SizedBox.shrink();
+
+    return Positioned.fill(
+      child: Stack(
+        children: [
+          // Overlay de fondo
+          GestureDetector(
+            onTap: onClose,
+            child: Container(color: AppTheme.primaryBlue.withOpacity(0.4)),
+          ),
+
+          // Menú lateral desde la derecha
+          Positioned(
+            top: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              width: 280,
+              decoration: BoxDecoration(
+                color: AppTheme.pureWhite.withOpacity(0.95),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.primaryBlue.withOpacity(0.3),
+                    blurRadius: 25,
+                    offset: const Offset(-8, 0),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  // Header del menú lateral
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          AppTheme.accentBlue.withOpacity(0.15),
+                          AppTheme.lightBlue.withOpacity(0.1),
+                        ],
+                      ),
+                      border: Border(
+                        bottom: BorderSide(
+                          color: AppTheme.accentBlue.withOpacity(0.2),
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Menú',
+                            style: AppTheme.heading3.copyWith(
+                              color: AppTheme.primaryBlue,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: onClose,
+                          icon: Icon(
+                            Icons.close,
+                            color: AppTheme.primaryBlue,
+                            size: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Opciones del menú
+                  Expanded(
+                    child: Column(
+                      children: [
+                        _MobileNavItem(
+                          title: 'Inicio',
+                          onTap: () {
+                            onClose();
+                            onHomeTap();
+                          },
+                        ),
+                        _MobileNavItem(
+                          title: 'Productos',
+                          onTap: () {
+                            onClose();
+                            onServicesTap();
+                          },
+                        ),
+                        _MobileNavItem(
+                          title: 'Industrias',
+                          onTap: () {
+                            onClose();
+                            onIndustriesTap();
+                          },
+                        ),
+                        _MobileNavItem(
+                          title: 'Nosotros',
+                          onTap: () {
+                            onClose();
+                            onAboutTap();
+                          },
+                        ),
+                        _MobileNavItem(
+                          title: 'Contacto',
+                          onTap: () {
+                            onClose();
+                            onContactTap();
+                          },
+                        ),
+
+                        // Separador
+                        Container(
+                          height: 1.5,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.transparent,
+                                AppTheme.accentBlue.withOpacity(0.3),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                          margin: const EdgeInsets.symmetric(horizontal: 24),
+                        ),
+
+                        // Botón de WhatsApp en el menú lateral
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 16,
+                          ),
+                          child: _ContactButton(
+                            icon: null,
+                            customIcon: 'assets/icons/whatsapp_icon.png',
+                            label: 'WhatsApp',
+                            onTap: () {
+                              onClose();
+                              onWhatsAppTap();
+                            },
+                            color: const Color(0xFF25D366),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        child: Text(
-          title,
-          style: AppTheme.subtitle2.copyWith(
-            color: isActive ? AppTheme.accentBlue : AppTheme.metallicGray,
-            fontWeight: isActive ? FontWeight.w700 : FontWeight.w600,
-            fontSize: 16,
-          ),
-        ),
+        ],
       ),
     );
   }

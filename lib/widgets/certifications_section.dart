@@ -21,7 +21,7 @@ class CertificationsSection extends StatelessWidget {
           // Subtítulo
           Center(
             child: Text(
-              '¡Cumplimos con los más altos estándares internacionales de calidad!',
+              '¡Nuestros productos cumplen con los más altos estándares de calidad internacionales!',
               style: AppTheme.subtitle1.copyWith(
                 color: AppTheme.pureWhite.withOpacity(0.9),
               ),
@@ -61,7 +61,7 @@ class CertificationsSection extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    'Todas nuestras válvulas y tuberías cumplen con las especificaciones API-15L, ASTM-A234, A-105, ASTM-A53, ASTM A350LF2, ASTM A33 GRADO 6, ASME B36.10, ASTM-A182 GRADO 5/9, ASTM-A249/A269/A312/A304/316/316L/321/ALLOY 20, garantizando la máxima calidad y seguridad en sus aplicaciones industriales.',
+                    'Todas nuestros productos cumplen con los más altos estándares internacionales incluyendo API, ASTM, ASME, ANSI, DIN, ATEX, NACE, CE e ISO, garantizando la máxima calidad, seguridad y conformidad en sus aplicaciones industriales.',
                     style: AppTheme.bodyText1.copyWith(
                       color: AppTheme.pureWhite,
                       fontSize: 16,
@@ -77,15 +77,37 @@ class CertificationsSection extends StatelessWidget {
   }
 
   Widget _buildWideGrid() {
-    return Row(
+    return Column(
       children: [
-        Expanded(child: _buildCertificationCard(_certifications[0])),
-        const SizedBox(width: 24),
-        Expanded(child: _buildCertificationCard(_certifications[1])),
-        const SizedBox(width: 24),
-        Expanded(child: _buildCertificationCard(_certifications[2])),
-        const SizedBox(width: 24),
-        Expanded(child: _buildCertificationCard(_certifications[3])),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[0])),
+            const SizedBox(width: 24),
+            Expanded(child: _buildCertificationCard(_certifications[1])),
+            const SizedBox(width: 24),
+            Expanded(child: _buildCertificationCard(_certifications[2])),
+          ],
+        ),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[3])),
+            const SizedBox(width: 24),
+            Expanded(child: _buildCertificationCard(_certifications[4])),
+            const SizedBox(width: 24),
+            Expanded(child: _buildCertificationCard(_certifications[5])),
+          ],
+        ),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[6])),
+            const SizedBox(width: 24),
+            Expanded(child: _buildCertificationCard(_certifications[7])),
+            const SizedBox(width: 24),
+            Expanded(child: _buildCertificationCard(_certifications[8])),
+          ],
+        ),
       ],
     );
   }
@@ -108,6 +130,29 @@ class CertificationsSection extends StatelessWidget {
             Expanded(child: _buildCertificationCard(_certifications[3])),
           ],
         ),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[4])),
+            const SizedBox(width: 24),
+            Expanded(child: _buildCertificationCard(_certifications[5])),
+          ],
+        ),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[6])),
+            const SizedBox(width: 24),
+            Expanded(child: _buildCertificationCard(_certifications[7])),
+          ],
+        ),
+        const SizedBox(height: 24),
+        Center(
+          child: SizedBox(
+            width: 250, // Ancho fijo para la última tarjeta en tablet
+            child: _buildCertificationCard(_certifications[8]),
+          ),
+        ),
       ],
     );
   }
@@ -115,13 +160,44 @@ class CertificationsSection extends StatelessWidget {
   Widget _buildMobileGrid() {
     return Column(
       children: [
-        _buildCertificationCard(_certifications[0]),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[0])),
+            const SizedBox(width: 16),
+            Expanded(child: _buildCertificationCard(_certifications[1])),
+          ],
+        ),
         const SizedBox(height: 16),
-        _buildCertificationCard(_certifications[1]),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[2])),
+            const SizedBox(width: 16),
+            Expanded(child: _buildCertificationCard(_certifications[3])),
+          ],
+        ),
         const SizedBox(height: 16),
-        _buildCertificationCard(_certifications[2]),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[4])),
+            const SizedBox(width: 16),
+            Expanded(child: _buildCertificationCard(_certifications[5])),
+          ],
+        ),
         const SizedBox(height: 16),
-        _buildCertificationCard(_certifications[3]),
+        Row(
+          children: [
+            Expanded(child: _buildCertificationCard(_certifications[6])),
+            const SizedBox(width: 16),
+            Expanded(child: _buildCertificationCard(_certifications[7])),
+          ],
+        ),
+        const SizedBox(height: 16),
+        Center(
+          child: SizedBox(
+            width: 200, // Ancho fijo para la última tarjeta
+            child: _buildCertificationCard(_certifications[8]),
+          ),
+        ),
       ],
     );
   }
@@ -198,28 +274,59 @@ class CertificationData {
 }
 
 final List<CertificationData> _certifications = [
+  // Certificaciones principales (generales)
   CertificationData(
-    name: 'API-15L',
+    name: 'API',
     description:
-        'Estándar para tuberías de acero al carbono para servicios de transporte de petróleo y gas natural.',
-    icon: Icons.straighten,
+        'American Petroleum Institute - Estándares para equipos y materiales del sector petrolero y gasífero.',
+    icon: Icons.local_gas_station,
   ),
   CertificationData(
-    name: 'ASTM-A234',
+    name: 'ASTM',
     description:
-        'Especificación para accesorios de acero al carbono y aleado para servicios de alta temperatura.',
+        'American Society for Testing and Materials - Estándares para materiales y métodos de prueba.',
+    icon: Icons.science,
+  ),
+  CertificationData(
+    name: 'ASME',
+    description:
+        'American Society of Mechanical Engineers - Códigos y estándares para equipos de presión.',
+    icon: Icons.engineering,
+  ),
+  CertificationData(
+    name: 'ANSI',
+    description:
+        'American National Standards Institute - Estándares nacionales para productos y servicios.',
+    icon: Icons.verified_user,
+  ),
+  CertificationData(
+    name: 'DIN',
+    description:
+        'Deutsches Institut für Normung - Estándares alemanes para productos industriales.',
     icon: Icons.precision_manufacturing,
   ),
   CertificationData(
-    name: 'A-105',
+    name: 'ATEX',
     description:
-        'Especificación para accesorios de acero al carbono para servicios de alta temperatura y presión.',
-    icon: Icons.construction,
+        'Atmosphères Explosibles - Directiva europea para equipos en atmósferas explosivas.',
+    icon: Icons.security,
   ),
   CertificationData(
-    name: 'ASME B36.10',
+    name: 'NACE',
     description:
-        'Estándar para dimensiones de tuberías de acero al carbono y aleado para servicios industriales.',
-    icon: Icons.engineering,
+        'National Association of Corrosion Engineers - Estándares para control de corrosión.',
+    icon: Icons.shield,
+  ),
+  CertificationData(
+    name: 'CE',
+    description:
+        'Conformité Européenne - Marcado de conformidad para productos en el mercado europeo.',
+    icon: Icons.check_circle,
+  ),
+  CertificationData(
+    name: 'ISO',
+    description:
+        'International Organization for Standardization - Estándares internacionales de calidad.',
+    icon: Icons.public,
   ),
 ];

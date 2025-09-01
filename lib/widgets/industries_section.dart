@@ -20,7 +20,7 @@ class IndustriesSection extends StatelessWidget {
           // Subtítulo
           Center(
             child: Text(
-              '¡Soluciones especializadas para sectores industriales críticos!',
+              '¡Soluciones especializadas para sectores industriales!',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),
@@ -51,7 +51,7 @@ class IndustriesSection extends StatelessWidget {
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  'COMERCIALIZAMOS MARCAS DE FABRICAS RECONOCIDAS EN EL MERCADO INTERNACIONAL DEL SECTOR OIL AND GAS',
+                  'COMERCIALIZAMOS MARCAS DE FÁBRICAS RECONOCIDAS EN EL MERCADO INTERNACIONAL DEL SECTOR OIL AND GAS',
                   style: AppTheme.subtitle1.copyWith(
                     color: AppTheme.metallicGray,
                   ),
@@ -99,13 +99,6 @@ class IndustriesSection extends StatelessWidget {
     return Column(
       children:
           _industries.map((industry) => _buildIndustryCard(industry)).toList(),
-    );
-  }
-
-  Widget _buildIndustryColumn(List<IndustryData> industries) {
-    return Column(
-      children:
-          industries.map((industry) => _buildIndustryCard(industry)).toList(),
     );
   }
 
@@ -256,12 +249,14 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isMobile = constraints.maxWidth <= 600;
+        final bool isTablet =
+            constraints.maxWidth <= 1000 && constraints.maxWidth > 600;
         final int itemsPerPage = isMobile ? 2 : 4;
 
         return Column(
           children: [
             SizedBox(
-              height: 120,
+              height: isMobile ? 140 : (isTablet ? 150 : 160),
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (index) {
@@ -285,7 +280,7 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
                           return Expanded(
                             child: Container(
                               margin: const EdgeInsets.symmetric(horizontal: 8),
-                              height: 80,
+                              height: isMobile ? 100 : (isTablet ? 110 : 120),
                               decoration: BoxDecoration(
                                 color: AppTheme.pureWhite,
                                 borderRadius: BorderRadius.circular(12),
@@ -300,10 +295,15 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
                                 ],
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Image.asset(
-                                  brand.imagePath,
-                                  fit: BoxFit.contain,
+                                padding: EdgeInsets.all(
+                                  isMobile ? 20 : (isTablet ? 22 : 24),
+                                ),
+                                child: Transform.scale(
+                                  scale: brand.scaleFactor,
+                                  child: Image.asset(
+                                    brand.imagePath,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
                             ),
@@ -343,11 +343,36 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
 class BrandData {
   final String name;
   final String imagePath;
+  final double scaleFactor;
 
-  const BrandData({required this.name, required this.imagePath});
+  const BrandData({
+    required this.name,
+    required this.imagePath,
+    this.scaleFactor = 1.0,
+  });
 }
 
 final List<BrandData> _brands = [
+  // Marcas principales (orden prioritario)
+  BrandData(
+    name: 'JC Valves',
+    imagePath: 'assets/images/brands/jcvalves_logo2.png',
+  ),
+  BrandData(
+    name: 'ICP Valves',
+    imagePath: 'assets/images/brands/icpvalves_logo__1_-removebg-preview.png',
+  ),
+  BrandData(
+    name: 'ACTREG',
+    imagePath: 'assets/images/brands/actrec_logo-removebg-preview.png',
+    scaleFactor: 1.4,
+  ),
+  BrandData(
+    name: 'TTV',
+    imagePath: 'assets/images/brands/ttv_logo-removebg-preview.png',
+    scaleFactor: 1.3,
+  ),
+  // Otras marcas
   BrandData(
     name: 'Swagelok',
     imagePath: 'assets/images/brands/swagelok-logo__1_-removebg-preview.png',
@@ -357,26 +382,10 @@ final List<BrandData> _brands = [
     imagePath: 'assets/images/brands/ntgff__1_-removebg-preview.png',
   ),
   BrandData(
-    name: 'ICP Valves',
-    imagePath: 'assets/images/brands/icpvalves_logo__1_-removebg-preview.png',
-  ),
-  BrandData(
-    name: 'TTV',
-    imagePath: 'assets/images/brands/ttv_logo-removebg-preview.png',
-  ),
-  BrandData(
     name: 'TOSACA',
     imagePath: 'assets/images/brands/tosaca_logo-removebg-preview.png',
   ),
   BrandData(name: 'HGSP', imagePath: 'assets/images/brands/Hgsp_logo2.png'),
-  BrandData(
-    name: 'JC Valves',
-    imagePath: 'assets/images/brands/jcvalves_logo2.png',
-  ),
-  BrandData(
-    name: 'Actrec',
-    imagePath: 'assets/images/brands/actrec_logo-removebg-preview.png',
-  ),
   BrandData(
     name: 'Alloy & Stainless',
     imagePath:

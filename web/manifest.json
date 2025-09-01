@@ -1,11 +1,11 @@
 {
-    "name": "valvessteelpipes_paginaweb",
-    "short_name": "valvessteelpipes_paginaweb",
+    "name": "MAFM VALVES & STEEL C.A.",
+    "short_name": "MAFM VALVES",
     "start_url": ".",
-    "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "display": "browser",
+    "background_color": "#282B3D",
+    "theme_color": "#364E6F",
+    "description": "Empresa especializada en válvulas y tuberías de acero de alta calidad para las industrias más exigentes del mercado.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

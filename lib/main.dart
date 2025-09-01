@@ -41,6 +41,13 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey _industriesKey = GlobalKey();
   final GlobalKey _aboutKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
+  bool _isMenuOpen = false;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   void _scrollToSection(GlobalKey key) {
     final context = key.currentContext;
@@ -53,52 +60,105 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _toggleMenu() {
+    setState(() {
+      _isMenuOpen = !_isMenuOpen;
+    });
+  }
+
+  void _closeMenu() {
+    setState(() {
+      _isMenuOpen = false;
+    });
+  }
+
+  Future<void> _launchWhatsApp() async {
+    final url =
+        'https://wa.me/584142058090?text=Hola,%20me%20interesa%20conocer%20más%20sobre%20sus%20servicios%20de%20válvulas%20y%20tuberías.';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          // Header fijo
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: HeaderDelegate(
-              child: Header(
-                onServicesTap: () => _scrollToSection(_servicesKey),
-                onIndustriesTap: () => _scrollToSection(_industriesKey),
-                onAboutTap: () => _scrollToSection(_aboutKey),
-                onContactTap: () => _scrollToSection(_contactKey),
+      body: Stack(
+        children: [
+          CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              // Header fijo
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: HeaderDelegate(
+                  child: Header(
+                    onHomeTap: _scrollToTop,
+                    onServicesTap: () => _scrollToSection(_servicesKey),
+                    onIndustriesTap: () => _scrollToSection(_industriesKey),
+                    onAboutTap: () => _scrollToSection(_aboutKey),
+                    onContactTap: () => _scrollToSection(_contactKey),
+                    isMenuOpen: _isMenuOpen,
+                    onMenuToggle: _toggleMenu,
+                  ),
+                ),
               ),
-            ),
+
+              // Hero Section
+              SliverToBoxAdapter(
+                child: HeroSection(
+                  onContactTap: () => _scrollToSection(_contactKey),
+                ),
+              ),
+
+              // Servicios
+              SliverToBoxAdapter(
+                key: _servicesKey,
+                child: const ServicesSection(),
+              ),
+
+              // Industrias
+              SliverToBoxAdapter(
+                key: _industriesKey,
+                child: const IndustriesSection(),
+              ),
+
+              // Certificaciones
+              const SliverToBoxAdapter(child: CertificationsSection()),
+
+              // Nosotros
+              SliverToBoxAdapter(key: _aboutKey, child: const AboutSection()),
+
+              // Contacto
+              SliverToBoxAdapter(
+                key: _contactKey,
+                child: const ContactSection(),
+              ),
+
+              // Footer
+              const SliverToBoxAdapter(child: Footer()),
+            ],
           ),
 
-          // Hero Section
-          SliverToBoxAdapter(
-            child: HeroSection(
-              onContactTap: () => _scrollToSection(_contactKey),
-            ),
+          // Menú overlay
+          MobileMenuOverlay(
+            isOpen: _isMenuOpen,
+            onClose: _closeMenu,
+            onHomeTap: _scrollToTop,
+            onServicesTap: () => _scrollToSection(_servicesKey),
+            onIndustriesTap: () => _scrollToSection(_industriesKey),
+            onAboutTap: () => _scrollToSection(_aboutKey),
+            onContactTap: () => _scrollToSection(_contactKey),
+            onWhatsAppTap: _launchWhatsApp,
           ),
-
-          // Servicios
-          SliverToBoxAdapter(key: _servicesKey, child: const ServicesSection()),
-
-          // Industrias
-          SliverToBoxAdapter(
-            key: _industriesKey,
-            child: const IndustriesSection(),
-          ),
-
-          // Certificaciones
-          const SliverToBoxAdapter(child: CertificationsSection()),
-
-          // Nosotros
-          SliverToBoxAdapter(key: _aboutKey, child: const AboutSection()),
-
-          // Contacto
-          SliverToBoxAdapter(key: _contactKey, child: const ContactSection()),
-
-          // Footer
-          const SliverToBoxAdapter(child: Footer()),
         ],
       ),
     );

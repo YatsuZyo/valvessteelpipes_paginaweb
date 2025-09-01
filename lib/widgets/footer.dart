@@ -110,6 +110,20 @@ class Footer extends StatelessWidget {
               }
             },
           ),
+
+          const SizedBox(height: 20),
+
+          // Crédito de desarrollo
+          Center(
+            child: Text(
+              'Developed by @dev.zyo',
+              style: AppTheme.caption.copyWith(
+                color: AppTheme.pureWhite.withOpacity(0.5),
+                fontSize: 10,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
         ],
       ),
     );
