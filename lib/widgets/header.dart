@@ -123,7 +123,7 @@ class _HeaderState extends State<Header> {
                       children: [
                         _ContactButton(
                           icon: null,
-                          customIcon: 'assets/icons/whatsapp_icon.png',
+                          customIcon: 'assets/images/brands/whatsapplogo.png',
                           label: '¡Contáctanos!',
                           onTap: () => _launchWhatsApp(),
                           color: const Color(0xFF25D366),
@@ -506,7 +506,7 @@ class MobileMenuOverlay extends StatelessWidget {
                           ),
                           child: _ContactButton(
                             icon: null,
-                            customIcon: 'assets/icons/whatsapp_icon.png',
+                            customIcon: 'assets/images/brands/whatsapplogo.png',
                             label: 'WhatsApp',
                             onTap: () {
                               onClose();

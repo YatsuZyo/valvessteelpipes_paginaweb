@@ -22,10 +22,7 @@ class ServicesSection extends StatelessWidget {
       child: Column(
         children: [
           // Título de la sección
-          Text(
-            'NUESTROS PRODUCTOS',
-            style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
-          ),
+          Text('NUESTROS PRODUCTOS', style: AppTheme.heading2),
           const SizedBox(height: 16),
 
           // Subtítulo
@@ -163,7 +160,7 @@ class ServicesSection extends StatelessWidget {
             Text(
               service.title,
               style: AppTheme.heading3.copyWith(
-                color: AppTheme.primaryBlue,
+                color: AppTheme.titleGray,
                 fontSize: 24,
               ),
             ),
@@ -298,7 +295,7 @@ class ServiceData {
 
 final List<ServiceData> _services = [
   ServiceData(
-    title: 'Válvulas Industriales',
+    title: 'VÁLVULAS INDUSTRIALES',
     description:
         'Suministro de válvulas de compuerta, globo, mariposa, bola y check para aplicaciones industriales.',
     icon: Icons.precision_manufacturing,
@@ -318,7 +315,7 @@ final List<ServiceData> _services = [
     ],
   ),
   ServiceData(
-    title: 'Tuberías de Acero',
+    title: 'TUBERÍAS DE ACERO',
     description:
         'Suministro de tuberías para procesos industriales exigentes con múltiples materiales, conexiones y rangos de presión.',
     icon: Icons.straighten,
@@ -337,7 +334,7 @@ final List<ServiceData> _services = [
     ],
   ),
   ServiceData(
-    title: 'Accesorios y Conexiones',
+    title: 'ACCESORIOS Y CONEXIONES',
     description:
         'Codos, tees, reducciones y bridas de alta calidad para sistemas de tuberías.',
     icon: Icons.construction,
@@ -357,7 +354,7 @@ final List<ServiceData> _services = [
     ],
   ),
   ServiceData(
-    title: 'Actuadores Hidráulicos y Neumáticos',
+    title: 'ACTUADORES HIDRÁULICOS Y NEUMÁTICOS',
     description:
         'Automatización de válvulas con actuadores hidráulicos y neumáticos para control preciso y confiable.',
     icon: Icons.settings,

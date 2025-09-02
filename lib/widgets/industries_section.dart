@@ -11,10 +11,7 @@ class IndustriesSection extends StatelessWidget {
       child: Column(
         children: [
           // Título de la sección
-          Text(
-            'INDUSTRIAS QUE ATENDENMOS',
-            style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
-          ),
+          Text('INDUSTRIAS QUE ATENDENMOS', style: AppTheme.heading2),
           const SizedBox(height: 16),
 
           // Subtítulo
@@ -46,12 +43,12 @@ class IndustriesSection extends StatelessWidget {
             children: [
               Text(
                 'MARCAS COMERCIALIZADAS Y REPRESENTADAS',
-                style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
+                style: AppTheme.heading2,
               ),
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  'COMERCIALIZAMOS MARCAS DE FÁBRICAS RECONOCIDAS EN EL MERCADO INTERNACIONAL DEL SECTOR OIL AND GAS',
+                  '¡Comercializamos marcas de fábricas reconocidas en el mercado internacional del sector Oil & Gas!',
                   style: AppTheme.subtitle1.copyWith(
                     color: AppTheme.metallicGray,
                   ),
@@ -205,20 +202,20 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
     super.initState();
     _pageController = PageController(initialPage: 0);
     _animationController = AnimationController(
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 5),
       vsync: this,
     );
 
-    // Auto-scroll cada 3 segundos
+    // Auto-scroll cada 5 segundos
     _startAutoScroll();
   }
 
   void _startAutoScroll() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
         final int totalPages =
             (_brands.length /
-                    (MediaQuery.of(context).size.width <= 600 ? 2 : 4))
+                    (MediaQuery.of(context).size.width <= 600 ? 2 : 3))
                 .ceil();
 
         if (_currentPage < totalPages - 1) {
@@ -251,7 +248,7 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
         final bool isMobile = constraints.maxWidth <= 600;
         final bool isTablet =
             constraints.maxWidth <= 1000 && constraints.maxWidth > 600;
-        final int itemsPerPage = isMobile ? 2 : 4;
+        final int itemsPerPage = isMobile ? 2 : 3; // Cambiado de 4 a 3 para PC
 
         return Column(
           children: [
@@ -284,6 +281,10 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
                               decoration: BoxDecoration(
                                 color: AppTheme.pureWhite,
                                 borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: AppTheme.accentBlue.withOpacity(0.3),
+                                  width: 1.5,
+                                ),
                                 boxShadow: [
                                   BoxShadow(
                                     color: AppTheme.primaryBlue.withOpacity(
@@ -318,7 +319,7 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                (_brands.length / (constraints.maxWidth <= 600 ? 2 : 4)).ceil(),
+                (_brands.length / (constraints.maxWidth <= 600 ? 2 : 3)).ceil(),
                 (index) => Container(
                   width: 8,
                   height: 8,
@@ -353,7 +354,7 @@ class BrandData {
 }
 
 final List<BrandData> _brands = [
-  // Marcas principales (orden prioritario)
+  // Primer grupo: JC Valves, ICP, NTGD
   BrandData(
     name: 'JC Valves',
     imagePath: 'assets/images/brands/jcvalves_logo2.png',
@@ -363,27 +364,28 @@ final List<BrandData> _brands = [
     imagePath: 'assets/images/brands/icpvalves_logo__1_-removebg-preview.png',
   ),
   BrandData(
+    name: 'NTGD Valves',
+    imagePath: 'assets/images/brands/ntgff__1_-removebg-preview.png',
+  ),
+  // Segundo grupo: ACTREG, TTV, TOSACA
+  BrandData(
     name: 'ACTREG',
     imagePath: 'assets/images/brands/actrec_logo-removebg-preview.png',
-    scaleFactor: 1.4,
+    scaleFactor: 1.5, // Más grande
   ),
   BrandData(
     name: 'TTV',
     imagePath: 'assets/images/brands/ttv_logo-removebg-preview.png',
-    scaleFactor: 1.3,
-  ),
-  // Otras marcas
-  BrandData(
-    name: 'Swagelok',
-    imagePath: 'assets/images/brands/swagelok-logo__1_-removebg-preview.png',
-  ),
-  BrandData(
-    name: 'NTGD Valves',
-    imagePath: 'assets/images/brands/ntgff__1_-removebg-preview.png',
+    scaleFactor: 1.4, // Más grande
   ),
   BrandData(
     name: 'TOSACA',
     imagePath: 'assets/images/brands/tosaca_logo-removebg-preview.png',
+  ),
+  // Tercer grupo: Swagelok, HGSP, Alloy & Stainless
+  BrandData(
+    name: 'Swagelok',
+    imagePath: 'assets/images/brands/swagelok-logo__1_-removebg-preview.png',
   ),
   BrandData(name: 'HGSP', imagePath: 'assets/images/brands/Hgsp_logo2.png'),
   BrandData(

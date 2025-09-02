@@ -39,10 +39,7 @@ class _ContactSectionState extends State<ContactSection> {
       child: Column(
         children: [
           // Título de la sección
-          Text(
-            '¡CONTÁCTANOS!',
-            style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
-          ),
+          Text('¡CONTÁCTANOS!', style: AppTheme.heading2),
           const SizedBox(height: 16),
 
           // Subtítulo
@@ -72,7 +69,7 @@ class _ContactSectionState extends State<ContactSection> {
             alignment: Alignment.centerLeft,
             child: Text(
               'Ubicación',
-              style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
+              style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),
             ),
           ),
           const SizedBox(height: 16),
@@ -138,7 +135,7 @@ class _ContactSectionState extends State<ContactSection> {
             children: [
               Text(
                 'Envíanos un Mensaje',
-                style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
+                style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),
               ),
               const SizedBox(height: 24),
 
@@ -247,7 +244,7 @@ class _ContactSectionState extends State<ContactSection> {
       children: [
         Text(
           'Información de Contacto',
-          style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
+          style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),
         ),
         const SizedBox(height: 24),
 
@@ -291,11 +288,31 @@ class _ContactSectionState extends State<ContactSection> {
 
         const SizedBox(height: 24),
 
+        // Correos electrónicos
+        _buildContactItem(
+          icon: Icons.email,
+          title: 'Correos Electrónicos',
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildEmailLink('gerenciageneral@mafmvalves.com'),
+              const SizedBox(height: 8),
+              _buildEmailLink('negocios@mafmvalves.com'),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 24),
+
         // Instagram
         _buildContactItem(
           icon: Icons.camera_alt,
-          title: 'Instagram',
-          content: _buildSocialLink('@mafmvalves', () => _launchInstagram()),
+          title: 'Redes Sociales',
+          content: _buildSocialLink(
+            '@mafmvalves',
+            () => _launchInstagram(),
+            customImage: 'assets/images/brands/instagramlogo.png',
+          ),
         ),
 
         const SizedBox(height: 24),
@@ -383,15 +400,41 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Widget _buildSocialLink(String text, VoidCallback onTap) {
+  Widget _buildEmailLink(String email) {
     return InkWell(
-      onTap: onTap,
+      onTap: () => _launchEmail(email),
       child: Text(
-        text,
+        email,
         style: AppTheme.bodyText2.copyWith(
           color: AppTheme.accentBlue,
           decoration: TextDecoration.underline,
         ),
+      ),
+    );
+  }
+
+  Widget _buildSocialLink(
+    String text,
+    VoidCallback onTap, {
+    String? customImage,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (customImage != null) ...[
+            Image.asset(customImage, height: 16, width: 16),
+            const SizedBox(width: 8),
+          ],
+          Text(
+            text,
+            style: AppTheme.bodyText2.copyWith(
+              color: AppTheme.accentBlue,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -482,8 +525,15 @@ class _ContactSectionState extends State<ContactSection> {
     }
   }
 
+  Future<void> _launchEmail(String email) async {
+    final url = 'mailto:$email';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
+  }
+
   Future<void> _launchInstagram() async {
-    final url = 'https://www.instagram.com/mafmvalves/';
+    final url = 'https://www.instagram.com/mafmvalves/?hl=es-la';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     }

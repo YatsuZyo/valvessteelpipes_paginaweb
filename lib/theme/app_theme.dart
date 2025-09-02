@@ -20,8 +20,10 @@ class AppTheme {
     0xFFADB5BD,
   ); // Gris claro para fondos sutiles
 
-  // Nuevo color para títulos - armonía con el logo
-  static const Color titleGray = Color(0xFF6B6C70); // Gris azulado para títulos
+  // Nuevo color para títulos - mucho más claro y suave para mejor armonía
+  static const Color titleGray = Color(
+    0xFF6B6C70,
+  ); // Gris azulado mucho más claro para títulos
 
   // Gradientes profesionales - MÁS SUAVES Y LUMINOSOS
   static const LinearGradient primaryGradient = LinearGradient(

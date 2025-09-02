@@ -12,10 +12,7 @@ class AboutSection extends StatelessWidget {
       child: Column(
         children: [
           // Título de la sección
-          Text(
-            'SOBRE NOSOTROS...',
-            style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
-          ),
+          Text('SOBRE NOSOTROS', style: AppTheme.heading2),
           const SizedBox(height: 16),
 
           // Subtítulo
@@ -91,7 +88,7 @@ class AboutSection extends StatelessWidget {
         Text(
           'MAFM VALVES & STEEL PIPES C.A.',
           style: AppTheme.heading3.copyWith(
-            color: AppTheme.accentBlue,
+            color: AppTheme.titleGray,
             fontSize: 24,
           ),
         ),
@@ -127,7 +124,7 @@ class AboutSection extends StatelessWidget {
           description:
               'Proporcionar soluciones integrales para los sistemas de transimisión de fluidos suministrando materiales de la más alta calidad certificada contribuyendo al desarrollo eficiente de las industrias venezolanas o extranjeras del sector.',
           icon: Icons.flag,
-          color: AppTheme.accentBlue,
+          color: AppTheme.primaryBlue,
         ),
 
         const SizedBox(height: 20),
@@ -233,7 +230,7 @@ class AboutSection extends StatelessWidget {
       children: [
         Text(
           'NUESTROS VALORES',
-          style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
+          style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),
         ),
         const SizedBox(height: 40),
 

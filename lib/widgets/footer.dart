@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import 'mafm_logo.dart';
 
@@ -204,7 +205,7 @@ class Footer extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MafmImageOnly(size: 40),
+                  MafmImageOnly(size: 60),
                   const SizedBox(height: 12),
                   Text(
                     'MAFM',
@@ -226,7 +227,7 @@ class Footer extends StatelessWidget {
             else
               Row(
                 children: [
-                  MafmImageOnly(size: 40),
+                  MafmImageOnly(size: 60),
                   const SizedBox(width: 12),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,7 +269,12 @@ class Footer extends StatelessWidget {
             if (isVeryNarrow)
               Column(
                 children: [
-                  _buildSocialIcon(Icons.camera_alt, () {}, 'Instagram'),
+                  _buildSocialIcon(
+                    Icons.camera_alt,
+                    () => _launchInstagram(),
+                    'Instagram',
+                    customImage: 'assets/images/brands/instagramlogo.png',
+                  ),
                   const SizedBox(height: 12),
                   _buildSocialIcon(Icons.business, () {}, 'LinkedIn'),
                   const SizedBox(height: 12),
@@ -278,7 +284,12 @@ class Footer extends StatelessWidget {
             else
               Row(
                 children: [
-                  _buildSocialIcon(Icons.camera_alt, () {}, 'Instagram'),
+                  _buildSocialIcon(
+                    Icons.camera_alt,
+                    () => _launchInstagram(),
+                    'Instagram',
+                    customImage: 'assets/images/brands/instagramlogo.png',
+                  ),
                   const SizedBox(width: 16),
                   _buildSocialIcon(Icons.business, () {}, 'LinkedIn'),
                   const SizedBox(width: 16),
@@ -391,7 +402,12 @@ class Footer extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialIcon(IconData icon, VoidCallback onTap, String tooltip) {
+  Widget _buildSocialIcon(
+    IconData icon,
+    VoidCallback onTap,
+    String tooltip, {
+    String? customImage,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
@@ -406,8 +422,21 @@ class Footer extends StatelessWidget {
             width: 1,
           ),
         ),
-        child: Icon(icon, color: AppTheme.accentBlue, size: 18),
+        child:
+            customImage != null
+                ? Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Image.asset(customImage, fit: BoxFit.contain),
+                )
+                : Icon(icon, color: AppTheme.accentBlue, size: 18),
       ),
     );
+  }
+
+  Future<void> _launchInstagram() async {
+    final url = 'https://www.instagram.com/mafmvalves/?hl=es-la';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
   }
 }
