@@ -236,7 +236,7 @@ class AboutSection extends StatelessWidget {
 
         LayoutBuilder(
           builder: (context, constraints) {
-            if (constraints.maxWidth > 800) {
+            if (constraints.maxWidth > 1000) {
               return _buildValuesGrid();
             } else {
               return _buildValuesColumn();
@@ -264,21 +264,13 @@ class AboutSection extends StatelessWidget {
   Widget _buildValuesColumn() {
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(child: _buildValueCard(_values[0])),
-            const SizedBox(width: 24),
-            Expanded(child: _buildValueCard(_values[1])),
-          ],
-        ),
+        _buildValueCard(_values[0]),
         const SizedBox(height: 24),
-        Row(
-          children: [
-            Expanded(child: _buildValueCard(_values[2])),
-            const SizedBox(width: 24),
-            Expanded(child: _buildValueCard(_values[3])),
-          ],
-        ),
+        _buildValueCard(_values[1]),
+        const SizedBox(height: 24),
+        _buildValueCard(_values[2]),
+        const SizedBox(height: 24),
+        _buildValueCard(_values[3]),
       ],
     );
   }

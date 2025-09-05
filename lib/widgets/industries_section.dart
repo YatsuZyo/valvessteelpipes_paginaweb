@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 
 class IndustriesSection extends StatelessWidget {
@@ -56,6 +57,8 @@ class IndustriesSection extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               _BrandsCarousel(),
+              const SizedBox(height: 40),
+              _buildRepresentationButton(),
             ],
           ),
         ],
@@ -148,6 +151,41 @@ class IndustriesSection extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildRepresentationButton() {
+    return Center(
+      child: ElevatedButton.icon(
+        onPressed: _launchRepresentationLetters,
+        icon: const Icon(Icons.description, color: AppTheme.pureWhite),
+        label: const Text(
+          'Ver cartas de representación',
+          style: TextStyle(
+            color: AppTheme.pureWhite,
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppTheme.primaryBlue,
+          foregroundColor: AppTheme.pureWhite,
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 4,
+          shadowColor: AppTheme.primaryBlue.withOpacity(0.3),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _launchRepresentationLetters() async {
+    final url =
+        'https://drive.google.com/drive/folders/1dMSd2s4W-deOFb5VcXeGGUvhUokf6xnq?usp=sharing';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
   }
 }
 
