@@ -86,7 +86,7 @@ class AboutSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'MAFM VALVES & STEEL PIPES C.A.',
+          'MAFM VALVES & STEEL PIPE C.A.',
           style: AppTheme.heading3.copyWith(
             color: AppTheme.titleGray,
             fontSize: 24,
@@ -216,7 +216,7 @@ class AboutSection extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.asset(
-          'assets/images/Fondos/Imagen stock de valvulas (1).png',
+          'assets/images/Fondos/ImagenSTOCK.png',
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.cover,

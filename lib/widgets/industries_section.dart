@@ -251,10 +251,10 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
   void _startAutoScroll() {
     Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
+        final int itemsPerPage =
+            MediaQuery.of(context).size.width <= 600 ? 2 : 4;
         final int totalPages =
-            (_brands.length /
-                    (MediaQuery.of(context).size.width <= 600 ? 2 : 3))
-                .ceil();
+            (_brands.length / itemsPerPage).ceil();
 
         if (_currentPage < totalPages - 1) {
           _currentPage++;
@@ -286,7 +286,8 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
         final bool isMobile = constraints.maxWidth <= 600;
         final bool isTablet =
             constraints.maxWidth <= 1000 && constraints.maxWidth > 600;
-        final int itemsPerPage = isMobile ? 2 : 3; // Cambiado de 4 a 3 para PC
+        // 8 marcas: móvil 2×4 páginas; tablet/desktop 4×2 páginas (simétrico)
+        final int itemsPerPage = isMobile ? 2 : 4;
 
         return Column(
           children: [
@@ -357,7 +358,7 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                (_brands.length / (constraints.maxWidth <= 600 ? 2 : 3)).ceil(),
+                (_brands.length / (constraints.maxWidth <= 600 ? 2 : 4)).ceil(),
                 (index) => Container(
                   width: 8,
                   height: 8,
@@ -411,11 +412,12 @@ final List<BrandData> _brands = [
     imagePath: 'assets/images/brands/actrec_logo-removebg-preview.png',
     scaleFactor: 1.5, // Más grande
   ),
-  BrandData(
-    name: 'TTV',
-    imagePath: 'assets/images/brands/ttv_logo-removebg-preview.png',
-    scaleFactor: 1.4, // Más grande
-  ),
+  // TTV oculto a petición del cliente; descomentar para reincorporar:
+  // BrandData(
+  //   name: 'TTV',
+  //   imagePath: 'assets/images/brands/ttv_logo-removebg-preview.png',
+  //   scaleFactor: 1.4,
+  // ),
   BrandData(
     name: 'TOSACA',
     imagePath: 'assets/images/brands/tosaca_logo-removebg-preview.png',
