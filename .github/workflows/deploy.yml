@@ -1,4 +1,4 @@
-name: Deploy MAFM Valves Landing
+name: Deploy MAFM Valves Landing (Flutter Web)
 
 on:
   push:
@@ -6,13 +6,27 @@ on:
       - main
 
 jobs:
-  web-deploy:
-    name: 🚀 Deploy to cPanel
+  build-and-deploy:
+    name: 🏗️ Build & 🚀 Deploy
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
 
+    # 1. Instalar Flutter en la máquina virtual de GitHub
+    - name: 💙 Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        # Puedes especificar la versión si quieres, ej: flutter-version: '3.24.0'
+
+    # 2. Descargar paquetes y crear el build para Web
+    - name: 🛠️ Build Web
+      run: |
+        flutter pub get
+        flutter build web --release --base-href "/"
+
+    # 3. Subir el resultado (carpeta build/web) al cPanel
     - name: 📂 Sync files via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
@@ -20,8 +34,7 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         port: 21
-        # IMPORTANTE: 
-        # Si tus archivos deben ir dentro de public_html, ajusta server-dir.
-        # Si el usuario de FTP ya entra directo a la carpeta de la web, déjalo como ./
-        server-dir: ./ 
-        local-dir: ./
+        # IMPORTANTE: Aquí decimos que solo suba lo que está en build/web
+        local-dir: ./build/web/
+        # Ajusta a public_html/ si es necesario en tu cPanel
+        server-dir: ./
