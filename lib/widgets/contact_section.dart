@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../theme/app_theme.dart';
 import 'map_embed.dart';
 
@@ -462,35 +464,95 @@ class _ContactSectionState extends State<ContactSection> {
   }
 
   Future<void> _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isSubmitting = true;
-      });
+    if (!_formKey.currentState!.validate()) return;
 
-      // Simular envío del formulario
-      await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      _isSubmitting = true;
+    });
 
-      setState(() {
-        _isSubmitting = false;
-      });
+    try {
+      // Preparar los datos para Web3Forms
+      final response = await http.post(
+        Uri.parse('https://api.web3forms.com/submit'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'access_key': '3d4ca8e9-be62-47fe-80a2-435aa3dd8898',
+          'name': _nameController.text,
+          'email': _emailController.text,
+          'phone':
+              _phoneController.text.isNotEmpty
+                  ? _phoneController.text
+                  : 'No proporcionado',
+          'message': _messageController.text,
+          'subject': 'Nuevo mensaje desde el formulario web - MAFM VALVES',
+          'from_name': _nameController.text,
+        }),
+      );
 
-      // Mostrar mensaje de éxito
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.',
+        setState(() {
+          _isSubmitting = false;
+        });
+
+        if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
+
+          if (responseData['success'] == true) {
+            // Mostrar mensaje de éxito
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.',
+                ),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 4),
+              ),
+            );
+
+            // Limpiar formulario
+            _formKey.currentState!.reset();
+            _nameController.clear();
+            _emailController.clear();
+            _phoneController.clear();
+            _messageController.clear();
+          } else {
+            // Error en la respuesta de Web3Forms
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Error al enviar el mensaje: ${responseData['message'] ?? 'Error desconocido'}',
+                ),
+                backgroundColor: Colors.red,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+          }
+        } else {
+          // Error HTTP
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Error al enviar el mensaje. Código: ${response.statusCode}',
+              ),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 4),
             ),
-            backgroundColor: AppTheme.accentBlue,
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error de conexión: ${e.toString()}'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 4),
           ),
         );
-
-        // Limpiar formulario
-        _formKey.currentState!.reset();
-        _nameController.clear();
-        _emailController.clear();
-        _phoneController.clear();
-        _messageController.clear();
       }
     }
   }

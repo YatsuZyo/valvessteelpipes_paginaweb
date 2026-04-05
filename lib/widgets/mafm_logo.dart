@@ -8,7 +8,7 @@ class MafmLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/images/LOGO MAFM grande.png',
+      'assets/images/LogoMAFMGrande.png',
       width: size,
       height: size,
       fit: BoxFit.contain,
@@ -25,7 +25,7 @@ class MafmSimpleLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/images/LOGO MAFM grande.png',
+      'assets/images/LogoMAFMGrande.png',
       width: size,
       height: size,
       fit: BoxFit.contain,

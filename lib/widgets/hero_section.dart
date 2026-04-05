@@ -39,9 +39,7 @@ class HeroSection extends StatelessWidget {
               colors: [AppTheme.primaryBlue, AppTheme.secondaryBlue],
             ),
             image: const DecorationImage(
-              image: AssetImage(
-                'assets/images/Fondos/Imagen stock de valvulas (1).png',
-              ),
+              image: AssetImage('assets/images/Fondos/ImagenSTOCK.png'),
               fit: BoxFit.cover,
               opacity: 0.22,
             ),

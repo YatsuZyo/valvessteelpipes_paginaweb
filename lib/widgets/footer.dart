@@ -41,7 +41,7 @@ class Footer extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        '© 2025 MAFM VALVES & STEEL PIPES C.A. Todos los derechos reservados. RIF: J-408267160 ',
+                        '© 2025 MAFM VALVES & STEEL PIPE C.A. Todos los derechos reservados. RIF: J-408267160 ',
                         style: AppTheme.caption.copyWith(
                           color: AppTheme.pureWhite.withOpacity(0.7),
                         ),
@@ -77,7 +77,7 @@ class Footer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '© 2025 MAFM VALVES & STEEL PIPES C.A. Todos los derechos reservados. RIF: J-408267160 ',
+                      '© 2025 MAFM VALVES & STEEL PIPE C.A. Todos los derechos reservados. RIF: J-408267160 ',
                       style: AppTheme.caption.copyWith(
                         color: AppTheme.pureWhite.withOpacity(0.7),
                       ),
@@ -215,7 +215,7 @@ class Footer extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'VALVES & STEEL PIPES C.A.',
+                    'VALVES & STEEL PIPE C.A.',
                     style: AppTheme.caption.copyWith(
                       color: AppTheme.pureWhite.withOpacity(0.7),
                       fontSize: 10,
@@ -240,7 +240,7 @@ class Footer extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'VALVES & STEEL PIPES C.A.',
+                        'VALVES & STEEL PIPE C.A.',
                         style: AppTheme.caption.copyWith(
                           color: AppTheme.pureWhite.withOpacity(0.7),
                           fontSize: 10,
