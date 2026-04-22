@@ -61,7 +61,7 @@ class CertificationsSection extends StatelessWidget {
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    'Todas nuestros productos cumplen con los más altos estándares internacionales incluyendo API, ASTM, ASME, ANSI, DIN, ATEX, NACE, CE e ISO, garantizando la máxima calidad, seguridad y conformidad en sus aplicaciones industriales.',
+                    'Todos nuestros productos cumplen con los más altos estándares internacionales incluyendo API, ASTM, ASME, ANSI, DIN, ATEX, NACE, CE e ISO, garantizando la máxima calidad, seguridad y conformidad en sus aplicaciones industriales.',
                     style: AppTheme.bodyText1.copyWith(
                       color: AppTheme.pureWhite,
                       fontSize: 16,

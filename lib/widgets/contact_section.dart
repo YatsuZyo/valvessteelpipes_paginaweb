@@ -282,8 +282,8 @@ class _ContactSectionState extends State<ContactSection> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildPhoneLink('+58 414 205 8090'),
-              const SizedBox(height: 8),
-              _buildPhoneLink('+58 412 922 4402'),
+              //const SizedBox(height: 8),
+              //_buildPhoneLink('+58 412 922 4402'),
             ],
           ),
         ),

@@ -360,7 +360,7 @@ class Footer extends StatelessWidget {
         const SizedBox(height: 20),
 
         _buildContactItem(Icons.phone, '+58 414 205 8090'),
-        _buildContactItem(Icons.phone, '+58 412 922 4402'),
+        //_buildContactItem(Icons.phone, '+58 412 922 4402'),
         _buildContactItem(Icons.camera_alt, '@mafmvalves'),
         _buildContactItem(Icons.access_time, 'Lun-Vie: 8AM-6PM'),
       ],
