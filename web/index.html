@@ -169,7 +169,13 @@
          font-size: 14px;
        }
      }
-   </style>
+  </style>
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = null;
+  </script>
+  <script src="flutter.js" defer></script>
 </head>
 <body>
   <!-- Loading Screen -->
@@ -177,56 +183,45 @@
     <div class="loading-logo">
       <img src="LogoMAFMGrande.png" alt="MAFM VALVES & STEEL C.A." />
     </div>
-         <div class="loading-text">MAFM VALVES & STEEL PIPE C.A.</div>
+    <div class="loading-text">MAFM VALVES & STEEL PIPE C.A.</div>
     <div class="loading-subtitle">Cargando...</div>
     <div class="loading-spinner"></div>
   </div>
-    /* Simple loading indicator - minimal and fast */
-    .loading-indicator {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, #4A7AB8, #7BA3D1);
-      z-index: 9999;
-      animation: loading-bar 1s ease-in-out infinite;
-    }
-    
-    @keyframes loading-bar {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-  </style>
-</head>
-<body>
-  <!-- Simple loading bar at the top -->
-  <div id="loading-indicator" class="loading-indicator"></div>
 
-  <script src="flutter.js" defer></script>
-  
   <script>
-    // Service worker registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js');
-      });
-    }
-
-    // Flutter initialization
     window.addEventListener('load', function() {
-      // Hide loading bar
-      const loadingIndicator = document.getElementById('loading-indicator');
-      if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
-      }
-
       // Initialize Flutter
-      _flutter.loader.load({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        }
-      });
+      if (window._flutter) {
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: function(engineInitializer) {
+            engineInitializer.initializeEngine().then(function(appRunner) {
+              appRunner.runApp();
+              
+              // Hide loading screen after app is initialized
+              const loadingScreen = document.getElementById('loading-screen');
+              if (loadingScreen) {
+                loadingScreen.style.opacity = '0';
+                setTimeout(function() {
+                  loadingScreen.style.display = 'none';
+                }, 500); // Wait for transition
+              }
+            });
+          }
+        });
+      } else {
+        // Fallback for newer Flutter versions (3.22+) where flutter.js might not be used
+        console.warn("Flutter loader not found. The app might be using flutter_bootstrap.js");
+        // Hiding loading screen after a timeout just in case it's blocking the view
+        setTimeout(function() {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+          }
+        }, 3000);
+      }
     });
   </script>
 </body>

@@ -46,10 +46,10 @@ class _HeaderState extends State<Header> {
             height: 80,
             padding: horizontalPadding,
             decoration: BoxDecoration(
-              color: AppTheme.pureWhite.withOpacity(0.95),
+              color: AppTheme.pureWhite.withValues(alpha: 0.95),
               boxShadow: [
                 BoxShadow(
-                  color: AppTheme.primaryBlue.withOpacity(0.1),
+                  color: AppTheme.primaryBlue.withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 2),
                 ),
@@ -224,7 +224,7 @@ class _ContactButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.3),
+              color: color.withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -318,8 +318,8 @@ class _MobileNavItem extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        hoverColor: AppTheme.lightBlue.withOpacity(0.1),
-        splashColor: AppTheme.accentBlue.withOpacity(0.2),
+        hoverColor: AppTheme.lightBlue.withValues(alpha: 0.1),
+        splashColor: AppTheme.accentBlue.withValues(alpha: 0.2),
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -327,7 +327,7 @@ class _MobileNavItem extends StatelessWidget {
             color: Colors.transparent,
             border: Border(
               bottom: BorderSide(
-                color: AppTheme.accentBlue.withOpacity(0.1),
+                color: AppTheme.accentBlue.withValues(alpha: 0.1),
                 width: 1,
               ),
             ),
@@ -378,7 +378,9 @@ class MobileMenuOverlay extends StatelessWidget {
           // Overlay de fondo
           GestureDetector(
             onTap: onClose,
-            child: Container(color: AppTheme.primaryBlue.withOpacity(0.4)),
+            child: Container(
+              color: AppTheme.primaryBlue.withValues(alpha: 0.4),
+            ),
           ),
 
           // Menú lateral desde la derecha
@@ -389,10 +391,10 @@ class MobileMenuOverlay extends StatelessWidget {
             child: Container(
               width: 280,
               decoration: BoxDecoration(
-                color: AppTheme.pureWhite.withOpacity(0.95),
+                color: AppTheme.pureWhite.withValues(alpha: 0.95),
                 boxShadow: [
                   BoxShadow(
-                    color: AppTheme.primaryBlue.withOpacity(0.3),
+                    color: AppTheme.primaryBlue.withValues(alpha: 0.3),
                     blurRadius: 25,
                     offset: const Offset(-8, 0),
                   ),
@@ -408,13 +410,13 @@ class MobileMenuOverlay extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          AppTheme.accentBlue.withOpacity(0.15),
-                          AppTheme.lightBlue.withOpacity(0.1),
+                          AppTheme.accentBlue.withValues(alpha: 0.15),
+                          AppTheme.lightBlue.withValues(alpha: 0.1),
                         ],
                       ),
                       border: Border(
                         bottom: BorderSide(
-                          color: AppTheme.accentBlue.withOpacity(0.2),
+                          color: AppTheme.accentBlue.withValues(alpha: 0.2),
                           width: 1.5,
                         ),
                       ),
@@ -489,7 +491,7 @@ class MobileMenuOverlay extends StatelessWidget {
                             gradient: LinearGradient(
                               colors: [
                                 Colors.transparent,
-                                AppTheme.accentBlue.withOpacity(0.3),
+                                AppTheme.accentBlue.withValues(alpha: 0.3),
                                 Colors.transparent,
                               ],
                             ),

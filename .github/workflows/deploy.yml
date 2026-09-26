@@ -1,3 +1,34 @@
+<<<<<<< HEAD
+name: Deploy Web
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+      - run: flutter build web --release
+
+      # Solo se sube el artefacto web (no android/, ios/, etc.)
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./build/web/
+=======
 name: Deploy MAFM Valves Landing
 
 on:
@@ -25,3 +56,4 @@ jobs:
         # Si el usuario de FTP ya entra directo a la carpeta de la web, déjalo como ./
         server-dir: ./ 
         local-dir: ./
+>>>>>>> 53d4abe14a0fcf5e3cd238e881758186c2dfb057

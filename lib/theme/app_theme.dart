@@ -69,7 +69,7 @@ class AppTheme {
   static TextStyle get subtitle1 => GoogleFonts.montserrat(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: titleGray.withOpacity(0.8),
+    color: titleGray.withValues(alpha: 0.8),
     letterSpacing: 0.1,
   );
 
@@ -114,11 +114,9 @@ class AppTheme {
         primary: primaryBlue,
         secondary: accentBlue,
         surface: pureWhite,
-        background: pureWhite,
         onPrimary: pureWhite,
         onSecondary: pureWhite,
         onSurface: titleGray,
-        onBackground: titleGray,
       ),
 
       // AppBar
@@ -184,9 +182,9 @@ class AppTheme {
       ),
 
       // Cards
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 4,
-        shadowColor: primaryBlue.withOpacity(0.1),
+        shadowColor: primaryBlue.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         color: pureWhite,
       ),

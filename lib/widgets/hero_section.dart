@@ -9,7 +9,7 @@ class HeroSection extends StatelessWidget {
 
   Future<void> _launchCatalog() async {
     final url =
-        'https://drive.google.com/file/d/16bN5Ln2gQgF8yfNQJ8B6zY6L-HSd1YfO/view?usp=sharing';
+        'https://drive.google.com/file/d/1tcZLLYUb31IGhIJV7KBCvmCmRkKRtXYa/view?usp=drive_link';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     }
@@ -78,8 +78,8 @@ class HeroSection extends StatelessWidget {
                                   Text(
                                     '"Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un suplidor estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto o proceso productivo."',
                                     style: AppTheme.bodyText1.copyWith(
-                                      color: AppTheme.pureWhite.withOpacity(
-                                        0.92,
+                                      color: AppTheme.pureWhite.withValues(
+                                        alpha: 0.92,
                                       ),
                                       fontSize: bodySize,
                                       height: 1.6,
@@ -173,7 +173,7 @@ class _MobileContent extends StatelessWidget {
         Text(
           '"Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un suplidor estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto."',
           style: AppTheme.bodyText1.copyWith(
-            color: AppTheme.pureWhite.withOpacity(0.92),
+            color: AppTheme.pureWhite.withValues(alpha: 0.92),
             fontSize: bodySize,
             height: 1.55,
             fontStyle: FontStyle.italic,
@@ -247,7 +247,7 @@ class _StatItem extends StatelessWidget {
             Text(
               label,
               style: AppTheme.bodyText2.copyWith(
-                color: AppTheme.pureWhite.withOpacity(0.85),
+                color: AppTheme.pureWhite.withValues(alpha: 0.85),
                 fontSize: 14,
               ),
             ),
@@ -263,7 +263,7 @@ class _HeroPatternPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint =
         Paint()
-          ..color = AppTheme.accentBlue.withOpacity(0.05)
+          ..color = AppTheme.accentBlue.withValues(alpha: 0.05)
           ..strokeWidth = 1;
 
     for (int i = 0; i < size.width; i += 40) {

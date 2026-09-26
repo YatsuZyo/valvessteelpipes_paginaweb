@@ -8,7 +8,7 @@ class ServicesSection extends StatelessWidget {
 
   Future<void> _launchCatalog() async {
     final url =
-        'https://drive.google.com/file/d/16bN5Ln2gQgF8yfNQJ8B6zY6L-HSd1YfO/view?usp=sharing';
+        'https://drive.google.com/file/d/1tcZLLYUb31IGhIJV7KBCvmCmRkKRtXYa/view?usp=drive_link';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     }
@@ -105,7 +105,7 @@ class ServicesSection extends StatelessWidget {
   Widget _buildServiceCard(ServiceData service) {
     return Card(
       elevation: 8,
-      shadowColor: AppTheme.primaryBlue.withOpacity(0.15),
+      shadowColor: AppTheme.primaryBlue.withValues(alpha: 0.15),
       child: Container(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -120,7 +120,7 @@ class ServicesSection extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.primaryBlue.withOpacity(0.1),
+                        color: AppTheme.primaryBlue.withValues(alpha: 0.1),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),
@@ -134,7 +134,7 @@ class ServicesSection extends StatelessWidget {
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
-                          color: AppTheme.lightGray.withOpacity(0.2),
+                          color: AppTheme.lightGray.withValues(alpha: 0.2),
                           child: const Center(
                             child: Icon(Icons.image_not_supported),
                           ),
@@ -197,12 +197,12 @@ class ServicesSection extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: AppTheme.lightGray.withOpacity(0.3),
+                          color: AppTheme.lightGray.withValues(alpha: 0.3),
                           width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppTheme.primaryBlue.withOpacity(0.08),
+                            color: AppTheme.primaryBlue.withValues(alpha: 0.08),
                             blurRadius: 6,
                             offset: const Offset(0, 2),
                           ),
@@ -217,7 +217,9 @@ class ServicesSection extends StatelessWidget {
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
                               return Container(
-                                color: AppTheme.lightGray.withOpacity(0.2),
+                                color: AppTheme.lightGray.withValues(
+                                  alpha: 0.2,
+                                ),
                                 child: const Icon(Icons.broken_image),
                               );
                             },

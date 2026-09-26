@@ -177,7 +177,10 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return Container(color: AppTheme.pureWhite.withOpacity(0.95), child: child);
+    return Container(
+      color: AppTheme.pureWhite.withValues(alpha: 0.95),
+      child: child,
+    );
   }
 
   @override

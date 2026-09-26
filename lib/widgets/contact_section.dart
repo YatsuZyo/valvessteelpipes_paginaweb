@@ -22,7 +22,8 @@ class _ContactSectionState extends State<ContactSection> {
 
   static const String _address =
       'AV FUERZAS ARMADAS CC CENTRUM, GALPON Nº 14 BARCELONA EDO ANZOÁTEGUI';
-  static const String _mapsUrl = 'https://maps.app.goo.gl/BLNpyQXwKnZbdxMN8';
+  static const String _mapCoordinates = '10.120339, -64.676828';
+  static const String _mapsUrl = 'https://maps.app.goo.gl/odK61ME3bApzaHQ1A';
 
   @override
   void dispose() {
@@ -75,7 +76,11 @@ class _ContactSectionState extends State<ContactSection> {
             ),
           ),
           const SizedBox(height: 16),
-          GoogleMapEmbed(addressQuery: _address, height: 360, borderRadius: 16),
+          GoogleMapEmbed(
+            addressQuery: _mapCoordinates,
+            height: 360,
+            borderRadius: 16,
+          ),
           const SizedBox(height: 12),
           Align(
             alignment: Alignment.centerLeft,
@@ -282,8 +287,8 @@ class _ContactSectionState extends State<ContactSection> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildPhoneLink('+58 414 205 8090'),
-              const SizedBox(height: 8),
-              _buildPhoneLink('+58 412 922 4402'),
+              //const SizedBox(height: 8),
+              //_buildPhoneLink('+58 412 922 4402'),
             ],
           ),
         ),
@@ -363,7 +368,7 @@ class _ContactSectionState extends State<ContactSection> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppTheme.accentBlue.withOpacity(0.1),
+            color: AppTheme.accentBlue.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: AppTheme.accentBlue, size: 20),
