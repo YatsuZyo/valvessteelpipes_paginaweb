@@ -76,7 +76,11 @@ class _ContactSectionState extends State<ContactSection> {
             ),
           ),
           const SizedBox(height: 16),
-          GoogleMapEmbed(addressQuery: _mapCoordinates, height: 360, borderRadius: 16),
+          GoogleMapEmbed(
+            addressQuery: _mapCoordinates,
+            height: 360,
+            borderRadius: 16,
+          ),
           const SizedBox(height: 12),
           Align(
             alignment: Alignment.centerLeft,
@@ -364,7 +368,7 @@ class _ContactSectionState extends State<ContactSection> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppTheme.accentBlue.withOpacity(0.1),
+            color: AppTheme.accentBlue.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: AppTheme.accentBlue, size: 20),

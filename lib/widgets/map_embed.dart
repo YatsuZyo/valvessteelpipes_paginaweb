@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'dart:ui_web' as ui_web;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'dart:html';
@@ -32,7 +33,7 @@ class _GoogleMapEmbedState extends State<GoogleMapEmbed> {
     if (kIsWeb) {
       // Registra un factory único para este iframe
       // ignore: undefined_prefixed_name
-      ui.platformViewRegistry.registerViewFactory(_viewType, (int viewId) {
+      ui_web.platformViewRegistry.registerViewFactory(_viewType, (int viewId) {
         final encoded = Uri.encodeComponent(widget.addressQuery);
         final url = 'https://www.google.com/maps?q=$encoded&z=16&output=embed';
         final iframe =

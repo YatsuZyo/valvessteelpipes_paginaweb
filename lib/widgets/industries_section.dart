@@ -174,7 +174,7 @@ class IndustriesSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           elevation: 4,
-          shadowColor: AppTheme.primaryBlue.withOpacity(0.3),
+          shadowColor: AppTheme.primaryBlue.withValues(alpha: 0.3),
         ),
       ),
     );
@@ -253,8 +253,7 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
       if (mounted) {
         final int itemsPerPage =
             MediaQuery.of(context).size.width <= 600 ? 2 : 4;
-        final int totalPages =
-            (_brands.length / itemsPerPage).ceil();
+        final int totalPages = (_brands.length / itemsPerPage).ceil();
 
         if (_currentPage < totalPages - 1) {
           _currentPage++;
@@ -321,13 +320,15 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
                                 color: AppTheme.pureWhite,
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: AppTheme.accentBlue.withOpacity(0.3),
+                                  color: AppTheme.accentBlue.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   width: 1.5,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppTheme.primaryBlue.withOpacity(
-                                      0.1,
+                                    color: AppTheme.primaryBlue.withValues(
+                                      alpha: 0.1,
                                     ),
                                     blurRadius: 10,
                                     offset: const Offset(0, 4),

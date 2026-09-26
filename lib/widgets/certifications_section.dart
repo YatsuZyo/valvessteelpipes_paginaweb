@@ -23,7 +23,7 @@ class CertificationsSection extends StatelessWidget {
             child: Text(
               '¡Nuestros productos cumplen con los más altos estándares de calidad internacionales!',
               style: AppTheme.subtitle1.copyWith(
-                color: AppTheme.pureWhite.withOpacity(0.9),
+                color: AppTheme.pureWhite.withValues(alpha: 0.9),
               ),
             ),
           ),
@@ -48,10 +48,10 @@ class CertificationsSection extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: AppTheme.accentBlue.withOpacity(0.1),
+              color: AppTheme.accentBlue.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppTheme.accentBlue.withOpacity(0.3),
+                color: AppTheme.accentBlue.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -217,7 +217,7 @@ class CertificationsSection extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                color: AppTheme.accentBlue.withOpacity(0.1),
+                color: AppTheme.accentBlue.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
