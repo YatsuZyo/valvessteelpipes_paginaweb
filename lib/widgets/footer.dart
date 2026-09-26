@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import 'mafm_logo.dart';
 
@@ -26,7 +27,10 @@ class Footer extends StatelessWidget {
           const SizedBox(height: 40),
 
           // Línea divisoria
-          Container(height: 1, color: AppTheme.accentBlue.withOpacity(0.3)),
+          Container(
+            height: 1,
+            color: AppTheme.accentBlue.withValues(alpha: 0.3),
+          ),
 
           const SizedBox(height: 30),
 
@@ -40,9 +44,9 @@ class Footer extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        '© 2025 MAFM VALVES & STEEL PIPES C.A. Todos los derechos reservados. RIF: J-408267160 ',
+                        '© 2025 MAFM VALVES & STEEL PIPE C.A. Todos los derechos reservados. RIF: J-408267160 ',
                         style: AppTheme.caption.copyWith(
-                          color: AppTheme.pureWhite.withOpacity(0.7),
+                          color: AppTheme.pureWhite.withValues(alpha: 0.7),
                         ),
                       ),
                     ),
@@ -53,7 +57,7 @@ class Footer extends StatelessWidget {
                           child: Text(
                             'Política de Privacidad',
                             style: AppTheme.caption.copyWith(
-                              color: AppTheme.pureWhite.withOpacity(0.7),
+                              color: AppTheme.pureWhite.withValues(alpha: 0.7),
                             ),
                           ),
                         ),
@@ -63,7 +67,7 @@ class Footer extends StatelessWidget {
                           child: Text(
                             'Términos de Servicio',
                             style: AppTheme.caption.copyWith(
-                              color: AppTheme.pureWhite.withOpacity(0.7),
+                              color: AppTheme.pureWhite.withValues(alpha: 0.7),
                             ),
                           ),
                         ),
@@ -76,9 +80,9 @@ class Footer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '© 2025 MAFM VALVES & STEEL PIPES C.A. Todos los derechos reservados. RIF: J-408267160 ',
+                      '© 2025 MAFM VALVES & STEEL PIPE C.A. Todos los derechos reservados. RIF: J-408267160 ',
                       style: AppTheme.caption.copyWith(
-                        color: AppTheme.pureWhite.withOpacity(0.7),
+                        color: AppTheme.pureWhite.withValues(alpha: 0.7),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -89,7 +93,7 @@ class Footer extends StatelessWidget {
                           child: Text(
                             'Política de Privacidad',
                             style: AppTheme.caption.copyWith(
-                              color: AppTheme.pureWhite.withOpacity(0.7),
+                              color: AppTheme.pureWhite.withValues(alpha: 0.7),
                             ),
                           ),
                         ),
@@ -99,7 +103,7 @@ class Footer extends StatelessWidget {
                           child: Text(
                             'Términos de Servicio',
                             style: AppTheme.caption.copyWith(
-                              color: AppTheme.pureWhite.withOpacity(0.7),
+                              color: AppTheme.pureWhite.withValues(alpha: 0.7),
                             ),
                           ),
                         ),
@@ -109,6 +113,20 @@ class Footer extends StatelessWidget {
                 );
               }
             },
+          ),
+
+          const SizedBox(height: 20),
+
+          // Crédito de desarrollo
+          Center(
+            child: Text(
+              'Developed by @dev.zyo',
+              style: AppTheme.caption.copyWith(
+                color: AppTheme.pureWhite.withValues(alpha: 0.5),
+                fontSize: 10,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
           ),
         ],
       ),
@@ -190,7 +208,7 @@ class Footer extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MafmImageOnly(size: 40),
+                  MafmImageOnly(size: 60),
                   const SizedBox(height: 12),
                   Text(
                     'MAFM',
@@ -200,9 +218,9 @@ class Footer extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'VALVES & STEEL PIPES C.A.',
+                    'VALVES & STEEL PIPE C.A.',
                     style: AppTheme.caption.copyWith(
-                      color: AppTheme.pureWhite.withOpacity(0.7),
+                      color: AppTheme.pureWhite.withValues(alpha: 0.7),
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
                     ),
@@ -212,7 +230,7 @@ class Footer extends StatelessWidget {
             else
               Row(
                 children: [
-                  MafmImageOnly(size: 40),
+                  MafmImageOnly(size: 60),
                   const SizedBox(width: 12),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,9 +243,9 @@ class Footer extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'VALVES & STEEL PIPES C.A.',
+                        'VALVES & STEEL PIPE C.A.',
                         style: AppTheme.caption.copyWith(
-                          color: AppTheme.pureWhite.withOpacity(0.7),
+                          color: AppTheme.pureWhite.withValues(alpha: 0.7),
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
                         ),
@@ -243,7 +261,7 @@ class Footer extends StatelessWidget {
             Text(
               'Especialistas en válvulas industriales y tuberías de acero de la más alta calidad para las industrias más exigentes del mercado.',
               style: AppTheme.bodyText2.copyWith(
-                color: AppTheme.pureWhite.withOpacity(0.8),
+                color: AppTheme.pureWhite.withValues(alpha: 0.8),
                 height: 1.5,
               ),
             ),
@@ -254,7 +272,12 @@ class Footer extends StatelessWidget {
             if (isVeryNarrow)
               Column(
                 children: [
-                  _buildSocialIcon(Icons.camera_alt, () {}, 'Instagram'),
+                  _buildSocialIcon(
+                    Icons.camera_alt,
+                    () => _launchInstagram(),
+                    'Instagram',
+                    customImage: 'assets/images/brands/instagramlogo.png',
+                  ),
                   const SizedBox(height: 12),
                   _buildSocialIcon(Icons.business, () {}, 'LinkedIn'),
                   const SizedBox(height: 12),
@@ -264,7 +287,12 @@ class Footer extends StatelessWidget {
             else
               Row(
                 children: [
-                  _buildSocialIcon(Icons.camera_alt, () {}, 'Instagram'),
+                  _buildSocialIcon(
+                    Icons.camera_alt,
+                    () => _launchInstagram(),
+                    'Instagram',
+                    customImage: 'assets/images/brands/instagramlogo.png',
+                  ),
                   const SizedBox(width: 16),
                   _buildSocialIcon(Icons.business, () {}, 'LinkedIn'),
                   const SizedBox(width: 16),
@@ -335,7 +363,7 @@ class Footer extends StatelessWidget {
         const SizedBox(height: 20),
 
         _buildContactItem(Icons.phone, '+58 414 205 8090'),
-        _buildContactItem(Icons.phone, '+58 412 922 4402'),
+        //_buildContactItem(Icons.phone, '+58 412 922 4402'),
         _buildContactItem(Icons.camera_alt, '@mafmvalves'),
         _buildContactItem(Icons.access_time, 'Lun-Vie: 8AM-6PM'),
       ],
@@ -350,7 +378,7 @@ class Footer extends StatelessWidget {
         child: Text(
           text,
           style: AppTheme.bodyText2.copyWith(
-            color: AppTheme.pureWhite.withOpacity(0.7),
+            color: AppTheme.pureWhite.withValues(alpha: 0.7),
           ),
         ),
       ),
@@ -368,7 +396,7 @@ class Footer extends StatelessWidget {
             child: Text(
               text,
               style: AppTheme.bodyText2.copyWith(
-                color: AppTheme.pureWhite.withOpacity(0.7),
+                color: AppTheme.pureWhite.withValues(alpha: 0.7),
               ),
             ),
           ),
@@ -377,7 +405,12 @@ class Footer extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialIcon(IconData icon, VoidCallback onTap, String tooltip) {
+  Widget _buildSocialIcon(
+    IconData icon,
+    VoidCallback onTap,
+    String tooltip, {
+    String? customImage,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
@@ -385,15 +418,28 @@ class Footer extends StatelessWidget {
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-          color: AppTheme.accentBlue.withOpacity(0.2),
+          color: AppTheme.accentBlue.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: AppTheme.accentBlue.withOpacity(0.3),
+            color: AppTheme.accentBlue.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
-        child: Icon(icon, color: AppTheme.accentBlue, size: 18),
+        child:
+            customImage != null
+                ? Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Image.asset(customImage, fit: BoxFit.contain),
+                )
+                : Icon(icon, color: AppTheme.accentBlue, size: 18),
       ),
     );
+  }
+
+  Future<void> _launchInstagram() async {
+    final url = 'https://www.instagram.com/mafmvalves/?hl=es-la';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
   }
 }

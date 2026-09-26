@@ -31,10 +31,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./build/web/
-          # Ajusta la carpeta destino si tu FTP no apunta directo a la raíz pública
           server-dir: public_html/
           dangerous-clean-slate: false 
 
       - name: Purge cPanel Cache
-        # Reemplaza 'tudominio.com' por la URL real de tu página web
         run: curl -s "https://mafmvalves.com/purge_cache.php?token=${{ secrets.CACHE_TOKEN }}"

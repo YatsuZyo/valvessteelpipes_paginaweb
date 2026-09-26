@@ -1,0 +1,43 @@
+[1mdiff --git a/lib/widgets/about_section.dart b/lib/widgets/about_section.dart[m
+[1mindex e9c1fd0..42c84e5 100644[m
+[1m--- a/lib/widgets/about_section.dart[m
+[1m+++ b/lib/widgets/about_section.dart[m
+[36m@@ -12,10 +12,7 @@[m [mclass AboutSection extends StatelessWidget {[m
+       child: Column([m
+         children: [[m
+           // Título de la sección[m
+[31m-          Text([m
+[31m-            'SOBRE NOSOTROS...',[m
+[31m-            style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),[m
+[31m-          ),[m
+[32m+[m[32m          Text('SOBRE NOSOTROS', style: AppTheme.heading2),[m
+           const SizedBox(height: 16),[m
+ [m
+           // Subtítulo[m
+[36m@@ -91,7 +88,7 @@[m [mclass AboutSection extends StatelessWidget {[m
+         Text([m
+           'MAFM VALVES & STEEL PIPES C.A.',[m
+           style: AppTheme.heading3.copyWith([m
+[31m-            color: AppTheme.accentBlue,[m
+[32m+[m[32m            color: AppTheme.titleGray,[m
+             fontSize: 24,[m
+           ),[m
+         ),[m
+[36m@@ -127,7 +124,7 @@[m [mclass AboutSection extends StatelessWidget {[m
+           description:[m
+               'Proporcionar soluciones integrales para los sistemas de transimisión de fluidos suministrando materiales de la más alta calidad certificada contribuyendo al desarrollo eficiente de las industrias venezolanas o extranjeras del sector.',[m
+           icon: Icons.flag,[m
+[31m-          color: AppTheme.accentBlue,[m
+[32m+[m[32m          color: AppTheme.primaryBlue,[m
+         ),[m
+ [m
+         const SizedBox(height: 20),[m
+[36m@@ -233,7 +230,7 @@[m [mclass AboutSection extends StatelessWidget {[m
+       children: [[m
+         Text([m
+           'NUESTROS VALORES',[m
+[31m-          style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),[m
+[32m+[m[32m          style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),[m
+         ),[m
+         const SizedBox(height: 40),[m
+ [m

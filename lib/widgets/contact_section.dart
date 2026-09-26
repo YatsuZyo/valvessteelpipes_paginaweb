@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../theme/app_theme.dart';
 import 'map_embed.dart';
 
@@ -20,7 +22,8 @@ class _ContactSectionState extends State<ContactSection> {
 
   static const String _address =
       'AV FUERZAS ARMADAS CC CENTRUM, GALPON Nº 14 BARCELONA EDO ANZOÁTEGUI';
-  static const String _mapsUrl = 'https://maps.app.goo.gl/BLNpyQXwKnZbdxMN8';
+  static const String _mapCoordinates = '10.120339, -64.676828';
+  static const String _mapsUrl = 'https://maps.app.goo.gl/odK61ME3bApzaHQ1A';
 
   @override
   void dispose() {
@@ -39,16 +42,13 @@ class _ContactSectionState extends State<ContactSection> {
       child: Column(
         children: [
           // Título de la sección
-          Text(
-            'Contáctanos',
-            style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
-          ),
+          Text('¡CONTÁCTANOS!', style: AppTheme.heading2),
           const SizedBox(height: 16),
 
           // Subtítulo
           Center(
             child: Text(
-              '¡Estamos para ayudarle con sus necesidades de válvulas y tuberías!',
+              '¡Estamos para ayudarle con sus necesidades de tuberías, válvulas, actuadores y conexiones de acero al carbono e inoxidable!',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),
@@ -72,11 +72,15 @@ class _ContactSectionState extends State<ContactSection> {
             alignment: Alignment.centerLeft,
             child: Text(
               'Ubicación',
-              style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
+              style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),
             ),
           ),
           const SizedBox(height: 16),
-          GoogleMapEmbed(addressQuery: _address, height: 360, borderRadius: 16),
+          GoogleMapEmbed(
+            addressQuery: _mapCoordinates,
+            height: 360,
+            borderRadius: 16,
+          ),
           const SizedBox(height: 12),
           Align(
             alignment: Alignment.centerLeft,
@@ -138,7 +142,7 @@ class _ContactSectionState extends State<ContactSection> {
             children: [
               Text(
                 'Envíanos un Mensaje',
-                style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
+                style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),
               ),
               const SizedBox(height: 24),
 
@@ -247,7 +251,7 @@ class _ContactSectionState extends State<ContactSection> {
       children: [
         Text(
           'Información de Contacto',
-          style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
+          style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),
         ),
         const SizedBox(height: 24),
 
@@ -283,8 +287,24 @@ class _ContactSectionState extends State<ContactSection> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildPhoneLink('+58 414 205 8090'),
+              //const SizedBox(height: 8),
+              //_buildPhoneLink('+58 412 922 4402'),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 24),
+
+        // Correos electrónicos
+        _buildContactItem(
+          icon: Icons.email,
+          title: 'Correos Electrónicos',
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildEmailLink('gerenciageneral@mafmvalves.com'),
               const SizedBox(height: 8),
-              _buildPhoneLink('+58 412 922 4402'),
+              _buildEmailLink('negocios@mafmvalves.com'),
             ],
           ),
         ),
@@ -294,8 +314,12 @@ class _ContactSectionState extends State<ContactSection> {
         // Instagram
         _buildContactItem(
           icon: Icons.camera_alt,
-          title: 'Instagram',
-          content: _buildSocialLink('@mafmvalves', () => _launchInstagram()),
+          title: 'Redes Sociales',
+          content: _buildSocialLink(
+            '@mafmvalves',
+            () => _launchInstagram(),
+            customImage: 'assets/images/brands/instagramlogo.png',
+          ),
         ),
 
         const SizedBox(height: 24),
@@ -344,7 +368,7 @@ class _ContactSectionState extends State<ContactSection> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppTheme.accentBlue.withOpacity(0.1),
+            color: AppTheme.accentBlue.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, color: AppTheme.accentBlue, size: 20),
@@ -383,15 +407,41 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Widget _buildSocialLink(String text, VoidCallback onTap) {
+  Widget _buildEmailLink(String email) {
     return InkWell(
-      onTap: onTap,
+      onTap: () => _launchEmail(email),
       child: Text(
-        text,
+        email,
         style: AppTheme.bodyText2.copyWith(
           color: AppTheme.accentBlue,
           decoration: TextDecoration.underline,
         ),
+      ),
+    );
+  }
+
+  Widget _buildSocialLink(
+    String text,
+    VoidCallback onTap, {
+    String? customImage,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (customImage != null) ...[
+            Image.asset(customImage, height: 16, width: 16),
+            const SizedBox(width: 8),
+          ],
+          Text(
+            text,
+            style: AppTheme.bodyText2.copyWith(
+              color: AppTheme.accentBlue,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -419,35 +469,95 @@ class _ContactSectionState extends State<ContactSection> {
   }
 
   Future<void> _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isSubmitting = true;
-      });
+    if (!_formKey.currentState!.validate()) return;
 
-      // Simular envío del formulario
-      await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      _isSubmitting = true;
+    });
 
-      setState(() {
-        _isSubmitting = false;
-      });
+    try {
+      // Preparar los datos para Web3Forms
+      final response = await http.post(
+        Uri.parse('https://api.web3forms.com/submit'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'access_key': '3d4ca8e9-be62-47fe-80a2-435aa3dd8898',
+          'name': _nameController.text,
+          'email': _emailController.text,
+          'phone':
+              _phoneController.text.isNotEmpty
+                  ? _phoneController.text
+                  : 'No proporcionado',
+          'message': _messageController.text,
+          'subject': 'Nuevo mensaje desde el formulario web - MAFM VALVES',
+          'from_name': _nameController.text,
+        }),
+      );
 
-      // Mostrar mensaje de éxito
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.',
+        setState(() {
+          _isSubmitting = false;
+        });
+
+        if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
+
+          if (responseData['success'] == true) {
+            // Mostrar mensaje de éxito
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  '¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.',
+                ),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 4),
+              ),
+            );
+
+            // Limpiar formulario
+            _formKey.currentState!.reset();
+            _nameController.clear();
+            _emailController.clear();
+            _phoneController.clear();
+            _messageController.clear();
+          } else {
+            // Error en la respuesta de Web3Forms
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Error al enviar el mensaje: ${responseData['message'] ?? 'Error desconocido'}',
+                ),
+                backgroundColor: Colors.red,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+          }
+        } else {
+          // Error HTTP
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Error al enviar el mensaje. Código: ${response.statusCode}',
+              ),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 4),
             ),
-            backgroundColor: AppTheme.accentBlue,
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error de conexión: ${e.toString()}'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 4),
           ),
         );
-
-        // Limpiar formulario
-        _formKey.currentState!.reset();
-        _nameController.clear();
-        _emailController.clear();
-        _phoneController.clear();
-        _messageController.clear();
       }
     }
   }
@@ -482,8 +592,15 @@ class _ContactSectionState extends State<ContactSection> {
     }
   }
 
+  Future<void> _launchEmail(String email) async {
+    final url = 'mailto:$email';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
+  }
+
   Future<void> _launchInstagram() async {
-    final url = 'https://www.instagram.com/mafmvalves/';
+    final url = 'https://www.instagram.com/mafmvalves/?hl=es-la';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     }

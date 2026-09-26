@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 
 class IndustriesSection extends StatelessWidget {
@@ -11,16 +12,13 @@ class IndustriesSection extends StatelessWidget {
       child: Column(
         children: [
           // Título de la sección
-          Text(
-            'Industrias que Atendemos',
-            style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
-          ),
+          Text('INDUSTRIAS QUE ATENDENMOS', style: AppTheme.heading2),
           const SizedBox(height: 16),
 
           // Subtítulo
           Center(
             child: Text(
-              '¡Soluciones especializadas para sectores industriales críticos!',
+              '¡Soluciones especializadas para sectores industriales!',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),
@@ -45,13 +43,13 @@ class IndustriesSection extends StatelessWidget {
           Column(
             children: [
               Text(
-                'Marcas que Representamos',
-                style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
+                'MARCAS COMERCIALIZADAS Y REPRESENTADAS',
+                style: AppTheme.heading2,
               ),
               const SizedBox(height: 16),
               Center(
                 child: Text(
-                  'Trabajamos con las marcas más reconocidas del mercado',
+                  '¡Comercializamos marcas de fábricas reconocidas en el mercado internacional del sector Oil & Gas!',
                   style: AppTheme.subtitle1.copyWith(
                     color: AppTheme.metallicGray,
                   ),
@@ -59,6 +57,8 @@ class IndustriesSection extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               _BrandsCarousel(),
+              const SizedBox(height: 40),
+              _buildRepresentationButton(),
             ],
           ),
         ],
@@ -99,13 +99,6 @@ class IndustriesSection extends StatelessWidget {
     return Column(
       children:
           _industries.map((industry) => _buildIndustryCard(industry)).toList(),
-    );
-  }
-
-  Widget _buildIndustryColumn(List<IndustryData> industries) {
-    return Column(
-      children:
-          industries.map((industry) => _buildIndustryCard(industry)).toList(),
     );
   }
 
@@ -158,6 +151,41 @@ class IndustriesSection extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildRepresentationButton() {
+    return Center(
+      child: ElevatedButton.icon(
+        onPressed: _launchRepresentationLetters,
+        icon: const Icon(Icons.description, color: AppTheme.pureWhite),
+        label: const Text(
+          'Ver cartas de representación',
+          style: TextStyle(
+            color: AppTheme.pureWhite,
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppTheme.primaryBlue,
+          foregroundColor: AppTheme.pureWhite,
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          elevation: 4,
+          shadowColor: AppTheme.primaryBlue.withValues(alpha: 0.3),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _launchRepresentationLetters() async {
+    final url =
+        'https://drive.google.com/drive/folders/1dMSd2s4W-deOFb5VcXeGGUvhUokf6xnq?usp=sharing';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
   }
 }
 
@@ -212,21 +240,20 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
     super.initState();
     _pageController = PageController(initialPage: 0);
     _animationController = AnimationController(
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 5),
       vsync: this,
     );
 
-    // Auto-scroll cada 3 segundos
+    // Auto-scroll cada 5 segundos
     _startAutoScroll();
   }
 
   void _startAutoScroll() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
-        final int totalPages =
-            (_brands.length /
-                    (MediaQuery.of(context).size.width <= 600 ? 2 : 4))
-                .ceil();
+        final int itemsPerPage =
+            MediaQuery.of(context).size.width <= 600 ? 2 : 4;
+        final int totalPages = (_brands.length / itemsPerPage).ceil();
 
         if (_currentPage < totalPages - 1) {
           _currentPage++;
@@ -256,12 +283,15 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
     return LayoutBuilder(
       builder: (context, constraints) {
         final bool isMobile = constraints.maxWidth <= 600;
+        final bool isTablet =
+            constraints.maxWidth <= 1000 && constraints.maxWidth > 600;
+        // 8 marcas: móvil 2×4 páginas; tablet/desktop 4×2 páginas (simétrico)
         final int itemsPerPage = isMobile ? 2 : 4;
 
         return Column(
           children: [
             SizedBox(
-              height: 120,
+              height: isMobile ? 140 : (isTablet ? 150 : 160),
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: (index) {
@@ -285,14 +315,20 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
                           return Expanded(
                             child: Container(
                               margin: const EdgeInsets.symmetric(horizontal: 8),
-                              height: 80,
+                              height: isMobile ? 100 : (isTablet ? 110 : 120),
                               decoration: BoxDecoration(
                                 color: AppTheme.pureWhite,
                                 borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: AppTheme.accentBlue.withValues(
+                                    alpha: 0.3,
+                                  ),
+                                  width: 1.5,
+                                ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppTheme.primaryBlue.withOpacity(
-                                      0.1,
+                                    color: AppTheme.primaryBlue.withValues(
+                                      alpha: 0.1,
                                     ),
                                     blurRadius: 10,
                                     offset: const Offset(0, 4),
@@ -300,10 +336,15 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
                                 ],
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Image.asset(
-                                  brand.imagePath,
-                                  fit: BoxFit.contain,
+                                padding: EdgeInsets.all(
+                                  isMobile ? 20 : (isTablet ? 22 : 24),
+                                ),
+                                child: Transform.scale(
+                                  scale: brand.scaleFactor,
+                                  child: Image.asset(
+                                    brand.imagePath,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
                             ),
@@ -343,40 +384,51 @@ class _BrandsCarouselState extends State<_BrandsCarousel>
 class BrandData {
   final String name;
   final String imagePath;
+  final double scaleFactor;
 
-  const BrandData({required this.name, required this.imagePath});
+  const BrandData({
+    required this.name,
+    required this.imagePath,
+    this.scaleFactor = 1.0,
+  });
 }
 
 final List<BrandData> _brands = [
+  // Primer grupo: JC Valves, ICP, NTGD
   BrandData(
-    name: 'Swagelok',
-    imagePath: 'assets/images/brands/swagelok-logo__1_-removebg-preview.png',
-  ),
-  BrandData(
-    name: 'Morris Valves',
-    imagePath: 'assets/images/brands/morrisvalves_logo-removebg-preview.png',
+    name: 'JC Valves',
+    imagePath: 'assets/images/brands/jcvalves_logo2.png',
   ),
   BrandData(
     name: 'ICP Valves',
     imagePath: 'assets/images/brands/icpvalves_logo__1_-removebg-preview.png',
   ),
   BrandData(
-    name: 'TTV',
-    imagePath: 'assets/images/brands/ttv_logo-removebg-preview.png',
+    name: 'NTGD Valves',
+    imagePath: 'assets/images/brands/ntgff__1_-removebg-preview.png',
   ),
+  // Segundo grupo: ACTREG, TTV, TOSACA
+  BrandData(
+    name: 'ACTREG',
+    imagePath: 'assets/images/brands/actrec_logo-removebg-preview.png',
+    scaleFactor: 1.5, // Más grande
+  ),
+  // TTV oculto a petición del cliente; descomentar para reincorporar:
+  // BrandData(
+  //   name: 'TTV',
+  //   imagePath: 'assets/images/brands/ttv_logo-removebg-preview.png',
+  //   scaleFactor: 1.4,
+  // ),
   BrandData(
     name: 'TOSACA',
     imagePath: 'assets/images/brands/tosaca_logo-removebg-preview.png',
   ),
+  // Tercer grupo: Swagelok, HGSP, Alloy & Stainless
+  BrandData(
+    name: 'Swagelok',
+    imagePath: 'assets/images/brands/swagelok-logo__1_-removebg-preview.png',
+  ),
   BrandData(name: 'HGSP', imagePath: 'assets/images/brands/Hgsp_logo2.png'),
-  BrandData(
-    name: 'JC Valves',
-    imagePath: 'assets/images/brands/jcvalves_logo2.png',
-  ),
-  BrandData(
-    name: 'Actrec',
-    imagePath: 'assets/images/brands/actrec_logo-removebg-preview.png',
-  ),
   BrandData(
     name: 'Alloy & Stainless',
     imagePath:

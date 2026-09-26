@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
-import 'mafm_logo.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -13,16 +12,13 @@ class AboutSection extends StatelessWidget {
       child: Column(
         children: [
           // Título de la sección
-          Text(
-            'Sobre Nosotros...',
-            style: AppTheme.heading2.copyWith(color: AppTheme.primaryBlue),
-          ),
+          Text('SOBRE NOSOTROS', style: AppTheme.heading2),
           const SizedBox(height: 16),
 
           // Subtítulo
           Center(
             child: Text(
-              '¡Más de 9 años de experiencia en la industria de válvulas y tuberías!',
+              '¡Más de 9 años en la comercialización de tuberías, válvulas, actuadores y conexiones de acero al carbono e inoxidable!',
               style: AppTheme.subtitle1.copyWith(color: AppTheme.metallicGray),
             ),
           ),
@@ -90,16 +86,16 @@ class AboutSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'MAFM VALVES & STEEL PIPES C.A.',
+          'MAFM VALVES & STEEL PIPE C.A.',
           style: AppTheme.heading3.copyWith(
-            color: AppTheme.accentBlue,
+            color: AppTheme.titleGray,
             fontSize: 24,
           ),
         ),
         const SizedBox(height: 16),
 
         Text(
-          'Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un socio estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto de la mano de nuestros mejores profesionales. Desde nuestros inicios en 2016, nos hemos dedicado a proporcionar soluciones integrales para las industrias más exigentes del mercado.',
+          'Somos una empresa venezolana líder, especializada en la importación y comercialización de materiales y equipos de alta gama para los sectores más exigentes del país. Nos enorgullece ser un suplidor estratégico para la industria de Oil & Gas, petroquímica e hidrológica, proporcionando soluciones integrales que garantizan la eficiencia y seguridad en cada proyecto de la mano de nuestros mejores profesionales. Desde nuestros inicios en 2016, nos hemos dedicado a proporcionar soluciones integrales para las industrias más exigentes del mercado.',
           style: AppTheme.bodyText1.copyWith(
             color: AppTheme.darkGray,
             height: 1.7,
@@ -126,9 +122,9 @@ class AboutSection extends StatelessWidget {
         _buildMissionVisionCard(
           title: 'Misión',
           description:
-              'Proporcionar soluciones integrales en válvulas y tuberías de acero de la más alta calidad, contribuyendo al desarrollo y eficiencia de las industrias venezolanas e internacionales.',
+              'Proporcionar soluciones integrales para los sistemas de transimisión de fluidos suministrando materiales de la más alta calidad certificada contribuyendo al desarrollo eficiente de las industrias venezolanas o extranjeras del sector.',
           icon: Icons.flag,
-          color: AppTheme.accentBlue,
+          color: AppTheme.primaryBlue,
         ),
 
         const SizedBox(height: 20),
@@ -137,7 +133,7 @@ class AboutSection extends StatelessWidget {
         _buildMissionVisionCard(
           title: 'Visión',
           description:
-              'Ser reconocidos como la empresa líder en Venezuela en la fabricación y distribución de válvulas y tuberías de acero, expandiendo nuestra presencia en mercados internacionales.',
+              'Comercialización y distribución de materiales necesarios para la transimisión de fluidos, tuberías, válvulas y conexiones para consolidar nuestra presencia en el mercado nacional.',
           icon: Icons.visibility,
           color: AppTheme.primaryBlue,
         ),
@@ -158,12 +154,12 @@ class AboutSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.1),
+            color: color.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(color: color.withOpacity(0.2), width: 1),
+        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
       ),
       child: Row(
         children: [
@@ -171,7 +167,7 @@ class AboutSection extends StatelessWidget {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, color: color, size: 24),
@@ -211,7 +207,7 @@ class AboutSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.accentBlue.withOpacity(0.3),
+            color: AppTheme.accentBlue.withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -220,7 +216,7 @@ class AboutSection extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.asset(
-          'assets/images/Fondos/Imagen stock de valvulas (1).png',
+          'assets/images/Fondos/ImagenSTOCK.png',
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.cover,
@@ -233,14 +229,14 @@ class AboutSection extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Nuestros Valores',
-          style: AppTheme.heading3.copyWith(color: AppTheme.primaryBlue),
+          'NUESTROS VALORES',
+          style: AppTheme.heading3.copyWith(color: AppTheme.titleGray),
         ),
         const SizedBox(height: 40),
 
         LayoutBuilder(
           builder: (context, constraints) {
-            if (constraints.maxWidth > 800) {
+            if (constraints.maxWidth > 1000) {
               return _buildValuesGrid();
             } else {
               return _buildValuesColumn();
@@ -268,21 +264,13 @@ class AboutSection extends StatelessWidget {
   Widget _buildValuesColumn() {
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(child: _buildValueCard(_values[0])),
-            const SizedBox(width: 24),
-            Expanded(child: _buildValueCard(_values[1])),
-          ],
-        ),
+        _buildValueCard(_values[0]),
         const SizedBox(height: 24),
-        Row(
-          children: [
-            Expanded(child: _buildValueCard(_values[2])),
-            const SizedBox(width: 24),
-            Expanded(child: _buildValueCard(_values[3])),
-          ],
-        ),
+        _buildValueCard(_values[1]),
+        const SizedBox(height: 24),
+        _buildValueCard(_values[2]),
+        const SizedBox(height: 24),
+        _buildValueCard(_values[3]),
       ],
     );
   }
@@ -321,6 +309,7 @@ class AboutSection extends StatelessWidget {
   }
 }
 
+//Cambios
 class ValueData {
   final String title;
   final String description;
@@ -336,17 +325,20 @@ class ValueData {
 final List<ValueData> _values = [
   ValueData(
     title: 'Calidad',
-    description: 'Compromiso con la excelencia en cada producto y servicio.',
+    description:
+        'Compromiso con la excelencia en cada material y producto que comercializamos.',
     icon: Icons.verified,
   ),
   ValueData(
-    title: 'Innovación',
-    description: 'Búsqueda constante de soluciones tecnológicas avanzadas.',
+    title: 'Puntualidad',
+    description:
+        'Cumplir a cabalidad con los tiempos de entrega requeridos y ofrecidos a nuestros clientes.',
     icon: Icons.lightbulb,
   ),
   ValueData(
     title: 'Confiabilidad',
-    description: 'Productos duraderos y servicios de soporte continuo.',
+    description:
+        'Nos esforzamos en que nuestros materiales sean duraderos y funcionen de manera correcta y consistente a lo largo del tiempo.',
     icon: Icons.handshake,
   ),
   ValueData(

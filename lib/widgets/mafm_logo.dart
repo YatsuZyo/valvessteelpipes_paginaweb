@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
 
 class MafmLogo extends StatelessWidget {
   final double size;
@@ -9,7 +8,7 @@ class MafmLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/images/LOGO MAFM grande.png',
+      'assets/images/LogoMAFMGrande.png',
       width: size,
       height: size,
       fit: BoxFit.contain,
@@ -26,7 +25,7 @@ class MafmSimpleLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/images/LOGO MAFM grande.png',
+      'assets/images/LogoMAFMGrande.png',
       width: size,
       height: size,
       fit: BoxFit.contain,
@@ -42,11 +41,27 @@ class MafmImageOnly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'assets/images/LOGO MAFM grande.png',
+    return Container(
       width: size,
       height: size,
-      fit: BoxFit.contain,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(8),
+      child: Image.asset(
+        'assets/images/logomafmicono.png',
+        width: size - 16,
+        height: size - 16,
+        fit: BoxFit.contain,
+      ),
     );
   }
 }
