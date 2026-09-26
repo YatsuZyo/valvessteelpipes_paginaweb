@@ -9,21 +9,32 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
-      - run: flutter pub get
-      - run: flutter build web --release
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Build Flutter Web
+        run: flutter build web --release
 
-      # Solo se sube el artefacto web (no android/, ios/, etc.)
-      - name: Deploy to FTP
+      - name: Deploy to cPanel FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./build/web/
+          # Ajusta la carpeta destino si tu FTP no apunta directo a la raíz pública
+          server-dir: public_html/
+          dangerous-clean-slate: false 
+
+      - name: Purge cPanel Cache
+        # Reemplaza 'tudominio.com' por la URL real de tu página web
+        run: curl -s "https://mafmvalves.com/purge_cache.php?token=${{ secrets.CACHE_TOKEN }}"
