@@ -1,0 +1,9 @@
+<IfModule mod_headers.c>
+    # Desactiva el caché solo para el index y el service worker
+    <FilesMatch "^(index\.html|flutter_service_worker\.js|version\.json)$">
+        FileETag None
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "Mon, 26 Jul 1997 05:00:00 GMT"
+    </FilesMatch>
+</IfModule>
