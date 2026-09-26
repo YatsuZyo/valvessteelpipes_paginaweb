@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 name: Deploy Web
 
 on:
@@ -10,50 +9,30 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
-      - run: flutter pub get
-      - run: flutter build web --release
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Build Flutter Web
+        run: flutter build web --release
 
-      # Solo se sube el artefacto web (no android/, ios/, etc.)
-      - name: Deploy to FTP
+      - name: Deploy to cPanel FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./build/web/
-=======
-name: Deploy MAFM Valves Landing
+          server-dir: public_html/
+          dangerous-clean-slate: false 
 
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  web-deploy:
-    name: 🚀 Deploy to cPanel
-    runs-on: ubuntu-latest
-    steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v4
-
-    - name: 📂 Sync files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        port: 21
-        # IMPORTANTE: 
-        # Si tus archivos deben ir dentro de public_html, ajusta server-dir.
-        # Si el usuario de FTP ya entra directo a la carpeta de la web, déjalo como ./
-        server-dir: ./ 
-        local-dir: ./
->>>>>>> 53d4abe14a0fcf5e3cd238e881758186c2dfb057
+      - name: Purge cPanel Cache
+        run: curl -s "https://mafmvalves.com/purge_cache.php?token=${{ secrets.CACHE_TOKEN }}"
