@@ -9,7 +9,7 @@ class HeroSection extends StatelessWidget {
 
   Future<void> _launchCatalog() async {
     final url =
-        'https://drive.google.com/file/d/16bN5Ln2gQgF8yfNQJ8B6zY6L-HSd1YfO/view?usp=sharing';
+        'https://drive.google.com/file/d/1tcZLLYUb31IGhIJV7KBCvmCmRkKRtXYa/view?usp=drive_link';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     }

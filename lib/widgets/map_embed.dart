@@ -34,7 +34,7 @@ class _GoogleMapEmbedState extends State<GoogleMapEmbed> {
       // ignore: undefined_prefixed_name
       ui.platformViewRegistry.registerViewFactory(_viewType, (int viewId) {
         final encoded = Uri.encodeComponent(widget.addressQuery);
-        final url = 'https://www.google.com/maps?q=$encoded&output=embed';
+        final url = 'https://www.google.com/maps?q=$encoded&z=16&output=embed';
         final iframe =
             IFrameElement()
               ..src = url
